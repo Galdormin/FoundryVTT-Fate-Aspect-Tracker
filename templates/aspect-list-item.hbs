@@ -1,0 +1,31 @@
+<li>
+  <div class="flexrow">
+    
+    <a title="add" class="todo-control" data-index="{{ @index }}" data-action="todo-increase-invoke">
+      <i class="fas fa-plus"></i>
+    </a>
+
+    <span class="tag">
+      {{ invoke }}
+    </span>
+
+    <a title="add" class="todo-control" data-index="{{ @index }}" data-action="todo-decrease-invoke">
+      <i class="fas fa-minus"></i>
+    </a>
+
+    <p class="todo-description {{#if done}}todo-done{{/if}}" {{#if color}}style="color: {{ color }}" {{/if}}>
+      <span class="description">
+        {{ description }}
+      </span>
+    </p>
+
+    <a title="{{ localize 'keikaku.todolistwindow.edittask' }}" class="todo-control" data-index="{{ @index }}"
+      data-action="todo-edit">
+      <i class="fas fa-edit"></i>
+    </a>
+    <a title="{{ localize 'keikaku.todolistwindow.deletetask' }}" class="todo-control" data-index="{{ @index }}"
+      data-action="todo-delete">
+      <i class="fas fa-trash-alt"></i>
+    </a>
+  </div>
+</li>

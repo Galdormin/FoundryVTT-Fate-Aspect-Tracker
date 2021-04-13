@@ -1,0 +1,19 @@
+<div>
+  {{#if tasks }}
+  <ol id="keikaku-todo-list">
+    {{#each tasks}}
+    {{> modules/fate-aspect-tracker/templates/aspect-list-item.hbs }}
+    {{/each}}
+  </ol>
+  {{else}}
+  <p>
+    {{ localize "keikaku.todolistwindow.placeholder" }}
+  </p>
+  {{/if}}
+</div>
+
+<div class="flex0">
+  <button class="todo-new">
+    <i class="fas fa-plus"></i> {{ localize "keikaku.todolistwindow.newtask" }}
+  </button>
+</div>

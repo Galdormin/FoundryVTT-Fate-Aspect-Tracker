@@ -14,20 +14,37 @@
     "library": false,
     "minimumCoreVersion": "0.7.9",
     "compatibleCoreVersion": "0.7.9",
-    "esmodules": [],
-    "styles": [],
+    "esmodules": [
+        "modules/keikaku.js"
+    ],
+    "styles": [
+        "styles/keikaku.css"
+    ],
     "languages": [
         {
             "lang": "en",
             "name": "English",
             "path": "lang/en.json"
-        },
-        {
-            "lang": "fr",
-            "name": "Français",
-            "path": "lang/fr.json"
         }
     ],
-    "includes": [],
-    "dependencies": []
+    "includes": [
+        "modules/keikaku.js",
+        "modules/colors.js",
+        "modules/logger.js",
+        "modules/todo.js",
+        "modules/ui.js",
+        "modules/socket.js",
+        "lang/en.json",
+        "styles/keikaku.css",
+        "templates/aspect-item-form.hbs",
+        "templates/aspect-list-item.hbs",
+        "templates/aspect-list.hbs"
+    ],
+    "dependencies": [
+        {
+            "name": "_sortablejs",
+            "type": "module"
+        }
+    ],
+    "socket": true
 }

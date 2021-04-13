@@ -1,0 +1,61 @@
+<form autocomplete="off">
+  <section class="task">
+    <fieldset class="form-group stacked">
+      <div class="form-fields">
+        <label for="fieldDescription">
+          {{ localize "keikaku.taskform.field.description" }}
+        </label>
+        <input type="text" id="fieldDescription" name="description" value="{{ task.description }}" data-dtype="String"
+          required="true">
+      </div>
+
+      <div class="form-fields">
+        <label for="fieldDone">
+          {{ localize "keikaku.taskform.field.done" }}
+        </label>
+        <input type="checkbox" id="fieldDone" name="done" data-dtype="Boolean" {{checked task.done}}>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group stacked">
+      <legend>{{ localize "keikaku.taskform.customization" }}</legend>
+
+      <div class="form-fields">
+        <label for="fieldTags">
+          {{ localize "keikaku.taskform.field.tag" }}
+        </label>
+        <select id="fieldTags" name="tag" data-dtype="Number">
+          {{#select task.tag}}
+          <option value="0">{{ localize "keikaku.taskform.field.tags.none" }}</option>
+          <option value="1">{{ localize "keikaku.taskform.field.tags.important" }}</option>
+          <option value="2">{{ localize "keikaku.taskform.field.tags.optional" }}</option>
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="form-fields">
+        <label for="fieldUseColor">
+          {{ localize "keikaku.taskform.field.color" }}
+        </label>
+        <input type="checkbox" id="fieldUseColor" name="useColor" data-dtype="Boolean" {{checked task.color}}>
+        <input {{#if task.color}}value="{{ task.color }}" {{/if}} {{ keikaku_disabled task.color }} type="color"
+          id="fieldColor" name="color" data-dtype="String">
+      </div>
+    </fieldset>
+
+    <input type="hidden" name="index" value="{{ index }}">
+  </section>
+
+  <hr>
+
+  <footer>
+    <button type="submit" name="submit">
+      <i class="far fa-save"></i>
+      {{#if index includeZero=true}}
+      {{ localize "keikaku.taskform.updatetask" }}
+      {{else}}
+      {{ localize "keikaku.taskform.createtask" }}
+      {{/if}}
+    </button>
+  </footer>
+</form>
