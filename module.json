@@ -1,0 +1,33 @@
+{
+    "manifestPlusVersion": "1.0.0",
+    "name": "fate-aspect-tracker",
+    "title": "Fate Aspect Tracker",
+    "description": "An Aspect Tracker for any Fate RPG.",
+    "version": "0.1",
+    "author": "Galdormin",
+    "url": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker",
+    "bugs": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/issues",
+    "allowBugReporter": true,
+    "manifest": "https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/main/module.json",
+    "download": "https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/archive/main.zip",
+    "media": [],
+    "library": false,
+    "minimumCoreVersion": "0.7.9",
+    "compatibleCoreVersion": "0.7.9",
+    "esmodules": [],
+    "styles": [],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        },
+        {
+            "lang": "fr",
+            "name": "Français",
+            "path": "lang/fr.json"
+        }
+    ],
+    "includes": [],
+    "dependencies": []
+}
