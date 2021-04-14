@@ -1,30 +1,47 @@
 <li>
   <div class="flexrow">
     
-    <a title="add" class="todo-control" data-index="{{ @index }}" data-action="todo-increase-invoke">
+    <a title="add" class="aspect-control" data-index="{{ @index }}" data-action="aspect-increase-invoke">
       <i class="fas fa-plus"></i>
     </a>
 
-    <span class="tag">
+    <span class="invoke">
       {{ invoke }}
     </span>
 
-    <a title="add" class="todo-control" data-index="{{ @index }}" data-action="todo-decrease-invoke">
+    <a title="add" class="aspect-control" data-index="{{ @index }}" data-action="aspect-decrease-invoke">
       <i class="fas fa-minus"></i>
     </a>
 
-    <p class="todo-description {{#if done}}todo-done{{/if}}" {{#if color}}style="color: {{ color }}" {{/if}}>
+    <p class="aspect-description" {{#if color}}style="color: {{ color }}" {{/if}}>
       <span class="description">
         {{ description }}
       </span>
     </p>
 
-    <a title="{{ localize 'keikaku.todolistwindow.edittask' }}" class="todo-control" data-index="{{ @index }}"
-      data-action="todo-edit">
+    {{#if (eq tag 1)}}
+    <span class="tag">
+      {{ localize "FateAspectTracker.aspecttrackerwindow.tags.situational" }}
+    </span>
+    {{/if}}
+    {{#if (eq tag 2)}}
+    <span class="tag">
+      {{ localize "FateAspectTracker.aspecttrackerwindow.tags.boost" }}
+    </span>
+    {{/if}}
+    {{#if (eq tag 3)}}
+    <span class="tag">
+      {{ localize "FateAspectTracker.aspecttrackerwindow.tags.resources" }}
+    </span>
+    {{/if}}
+
+
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.editaspect' }}" class="aspect-control" data-index="{{ @index }}"
+      data-action="aspect-edit">
       <i class="fas fa-edit"></i>
     </a>
-    <a title="{{ localize 'keikaku.todolistwindow.deletetask' }}" class="todo-control" data-index="{{ @index }}"
-      data-action="todo-delete">
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.deleteaspect' }}" class="aspect-control" data-index="{{ @index }}"
+      data-action="aspect-delete">
       <i class="fas fa-trash-alt"></i>
     </a>
   </div>

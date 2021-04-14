@@ -1,11 +1,11 @@
 /* global jQuery, Handlebars, Sortable */
 /* global game, loadTemplates, mergeObject, Application, FormApplication, Dialog */
 
-import { Task, TodoList } from "./todo.js";
+import { Aspect, Tracker } from "./tracker.js";
 import { RGBColor } from "./colors.js";
 
 /**
- * Parse handlebar templates included with keikaku.
+ * Parse handlebar templates included with the aspect tracker.
  * @returns {Promise<Array<Function>>} an array of functions used for rendering the templates
  */
 async function preloadTemplates() {
@@ -15,23 +15,23 @@ async function preloadTemplates() {
     "modules/fate-aspect-tracker/templates/aspect-item-form.hbs",
   ];
 
-  Handlebars.registerHelper("keikaku_disabled", (value) =>
+  Handlebars.registerHelper("tracker_disabled", (value) =>
     !value ? "disabled" : ""
   );
 
   return loadTemplates(templates);
 }
 
-export class TodoListWindow extends Application {
+export class AspectTrackerWindow extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      id: "keikaku-todo-list",
+      id: "fate-aspect-tracker-list",
       template: "modules/fate-aspect-tracker/templates/aspect-list.hbs",
       width: 400,
       height: 300,
       minimizable: true,
       resizable: true,
-      title: game.i18n.localize("keikaku.todolistwindow.title"),
+      title: game.i18n.localize("FateAspectTracker.aspecttrackerwindow.title"),
     });
   }
 
@@ -43,59 +43,56 @@ export class TodoListWindow extends Application {
   activateListeners(html) {
     super.activateListeners(html);
 
-    const listEl = html.find("#keikaku-todo-list").get(0);
+    const listEl = html.find("#fate-aspect-tracker-list").get(0);
     if (listEl) {
       Sortable.create(listEl, {
         onEnd: async (evt) => {
           if (evt.oldIndex == evt.newIndex) return;
 
-          const list = window.todoListWindow.getData();
-          await list.moveTask(evt.oldIndex, evt.newIndex);
-          window.todoListWindow.render(true);
+          const list = window.aspectTrackerWindow.getData();
+          await list.moveAspect(evt.oldIndex, evt.newIndex);
+          window.aspectTrackerWindow.render(true);
         },
       });
     }
 
-    html.on("click", "a.todo-control", async function () {
+    html.on("click", "a.aspect-control", async function () {
       const index = jQuery(this).data("index");
       const action = jQuery(this).data("action");
 
-      const list = window.todoListWindow.getData();
+      const list = window.aspectTrackerWindow.getData();
 
       switch (action) {
-        case "todo-toggle":
-          await list.toggleTask(index);
+        case "aspect-delete":
+          await list.deleteAspect(index);
           break;
-        case "todo-delete":
-          await list.deleteTask(index);
-          break;
-        case "todo-increase-invoke":
+        case "aspect-increase-invoke":
           await list.increaseInvoke(index);
           break;
-        case "todo-decrease-invoke":
+        case "aspect-decrease-invoke":
           await list.decreaseInvoke(index);
           break;
-        case "todo-edit":
-          new TaskForm(list.tasks[index], index).render(true);
+        case "aspect-edit":
+          new AspectForm(list.aspects[index], index).render(true);
           break;
         default:
           return;
       }
 
-      window.todoListWindow.render(true);
+      window.aspectTrackerWindow.render(true);
     });
 
-    html.on("click", "button.todo-new", async function () {
-      new TaskForm(undefined, undefined).render(true);
+    html.on("click", "button.aspect-new", async function () {
+      new AspectForm(undefined, undefined).render(true);
     });
 
-    // tags are colored based on the task color
-    html.find("#keikaku-todo-list span.tag").each(function () {
+    // tags are colored based on the aspect color
+    html.find("#fate-aspect-tracker-list span.tag").each(function () {
       const tag = jQuery(this);
 
       // we use the computed color if the description
-      // this lets use work with tasks that don't have a color
-      const desc = tag.siblings("p.todo-description");
+      // this lets use work with aspects that don't have a color
+      const desc = tag.siblings("p.aspect-description");
       const color = desc.css("color");
       const parsed = RGBColor.parse(color);
       const contrast = parsed.contrastColor();
@@ -104,40 +101,40 @@ export class TodoListWindow extends Application {
       tag.css("color", contrast.toCSS());
 
       // we base the border color on the regular text color
-      const control = tag.siblings("a.todo-control");
+      const control = tag.siblings("a.aspect-control");
       const borderColor = control.css("color");
       tag.css("border-color", borderColor);
     });
   }
 
   /**
-   * @returns {TodoList}
+   * @returns {Tracker}
    */
   getData() {
-    return TodoList.load();
+    return Tracker.load();
   }
 }
 
-class TaskForm extends FormApplication {
+class AspectForm extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      id: "keikaku-todo-item-form",
+      id: "fate-aspect-tracker-form",
       template: "modules/fate-aspect-tracker/templates/aspect-item-form.hbs",
       width: 400,
       minimizable: false,
       closeOnSubmit: true,
-      title: game.i18n.localize("keikaku.taskform.title"),
+      title: game.i18n.localize("FateAspectTracker.aspectform.title"),
     });
   }
 
   /**
-   * @param {Task} task is the (optional) task to edit
+   * @param {Aspect} aspect is the (optional) aspect to edit
    * @param {number?} index is the (optional) index in the to-do list
    **/
-  constructor(task, index) {
+  constructor(aspect, index) {
     super();
 
-    this.task = task ?? new Task();
+    this.aspect = aspect ?? new Aspect();
     this.index = index;
   }
 
@@ -163,20 +160,20 @@ class TaskForm extends FormApplication {
     return {
       index: this.index,
 
-      task: this.task,
+      aspect: this.aspect,
     };
   }
 
   /** @override */
   async _updateObject(_event, data) {
     const color = data.useColor ? data.color : null;
-    const task = new Task(data.description, data.done, data.tag, color);
+    const aspect = new Aspect(data.description, data.tag, color, data.invoke);
 
-    const list = TodoList.load();
-    if (data.index) await list.updateTask(data.index, task);
-    else await list.appendTask(task);
+    const list = Tracker.load();
+    if (data.index) await list.updateAspect(data.index, aspect);
+    else await list.appendAspect(aspect);
 
-    window.todoListWindow.render(true);
+    window.aspectTrackerWindow.render(true);
   }
 }
 
@@ -185,42 +182,8 @@ class TaskForm extends FormApplication {
  *
  * @param {JQuery} html is the rendered HTML provided by jQuery
  **/
-function setupTodoListWindow(html) {
-  window.todoListWindow = new TodoListWindow();
-}
-
-/**
- * Show a dialog reminding players of their to-do list.
- * Depending on the `showReminder` setting the reminder is displayed
- * - never
- * - when players have unfinished tasks
- * - always
- */
-export function showReminder() {
-  const list = TodoList.load();
-  const level = game.settings.get("fate-aspect-tracker", "showReminder");
-
-  if (level == "never" || (level == "incomplete" && !list.incomplete)) return;
-
-  const content = list.incomplete
-    ? game.i18n.localize("keikaku.reminder.incomplete")
-    : game.i18n.localize("keikaku.reminder.complete");
-
-  const hint = game.i18n.localize("keikaku.reminder.hint");
-
-  const reminder = new Dialog({
-    title: game.i18n.localize("keikaku.reminder.title"),
-    content: `<p>${content}</p><p><small>${hint}</small></p>`,
-    buttons: {
-      todo: {
-        icon: '<i class="fas fa-tasks"></i>',
-        label: game.i18n.localize("keikaku.reminder.button"),
-        callback: () => window.todoListWindow.render(true),
-      },
-    },
-  });
-
-  reminder.render(true);
+function setupAspectTrackerWindow(html) {
+  window.aspectTrackerWindow = new AspectTrackerWindow();
 }
 
 /**
@@ -233,5 +196,5 @@ export function showReminder() {
 export async function initUiComponents(html) {
   await preloadTemplates();
 
-  setupTodoListWindow(html);
+  setupAspectTrackerWindow(html);
 }

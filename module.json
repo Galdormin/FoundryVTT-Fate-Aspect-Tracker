@@ -15,10 +15,10 @@
     "minimumCoreVersion": "0.7.9",
     "compatibleCoreVersion": "0.7.9",
     "esmodules": [
-        "modules/keikaku.js"
+        "modules/fate-aspect-tracker.js"
     ],
     "styles": [
-        "styles/keikaku.css"
+        "styles/fate-aspect-tracker.css"
     ],
     "languages": [
         {
@@ -28,14 +28,14 @@
         }
     ],
     "includes": [
-        "modules/keikaku.js",
+        "modules/fate-aspect-tracker.js",
         "modules/colors.js",
         "modules/logger.js",
-        "modules/todo.js",
+        "modules/tracker.js",
         "modules/ui.js",
         "modules/socket.js",
         "lang/en.json",
-        "styles/keikaku.css",
+        "styles/fate-aspect-tracker.css",
         "templates/aspect-item-form.hbs",
         "templates/aspect-list-item.hbs",
         "templates/aspect-list.hbs"

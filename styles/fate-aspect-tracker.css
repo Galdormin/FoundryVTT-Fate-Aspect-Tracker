@@ -1,0 +1,54 @@
+#fate-aspect-tracker-list > li:not(:last-child):after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 95%;
+  margin: 5px;
+  border: none;
+  border-top: 1px solid #b5b3a4;
+  border-bottom: 1px solid #f0f0e0;
+}
+
+#fate-aspect-tracker-list .flexrow {
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+#fate-aspect-tracker-list .aspect-control {
+  flex: 0;
+  margin: 5px;
+}
+
+#fate-aspect-tracker-list .aspect-description {
+  hyphens: auto;
+  flex: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#fate-aspect-tracker-list span.tag {
+  flex: 0;
+  font-size: smaller;
+  padding: 1px 3px;
+
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#fate-aspect-tracker-list span.invoke {
+  flex: 0;
+  font-size: smaller;
+  padding: 1px 3px;
+  background-color: black;
+  color: white;
+
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#fate-aspect-tracker-form input.invoke {
+  flex: 0.1;
+  text-align: center;
+}

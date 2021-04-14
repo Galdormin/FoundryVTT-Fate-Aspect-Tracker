@@ -3,7 +3,7 @@
  * @param {string} message is the message to print
  **/
 export function info(message) {
-  console.info(`Keikaku | ${message}`);
+  console.info(`Fate Aspect Tracker | ${message}`);
 }
 
 /**
@@ -11,5 +11,5 @@ export function info(message) {
  * @param {string} message is the message to print
  **/
 export function warn(message) {
-  console.warn(`Keikaku | ${message}`);
+  console.warn(`Fate Aspect Tracker | ${message}`);
 }
