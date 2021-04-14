@@ -5,7 +5,7 @@ import Socket from "./socket.js";
 /** The selection of optional tags. **/
 const TAGS = {
   NONE: 0,
-  SITUATIONAL: 1,
+  SITUATION: 1,
   BOOST: 2,
   RESOURCES: 3,
 };
