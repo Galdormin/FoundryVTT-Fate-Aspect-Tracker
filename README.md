@@ -1,4 +1,4 @@
-# Fat Aspect Tracker
+# Fate Aspect Tracker
 
 **Fate Aspect Tracker** is a simple module for [Foundry Virtual Tabetop](https://foundryvtt.com/) that allows the GM to keep track of the *aspect* and their *free invoke* in any kind of [Fate](https://www.evilhat.com/home/fate-core/) game. Only the GM can create, edit and delete aspects but every player can open **Fate Aspect Tracker** and see every aspect and their number of free invoke.
 
