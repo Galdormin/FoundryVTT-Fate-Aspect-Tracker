@@ -21,5 +21,7 @@
   "FateAspectTracker.aspecttrackerwindow.placeholder": "There's no aspect at the moment. Add a new aspect to get started.",
   "FateAspectTracker.aspecttrackerwindow.tags.situation": "situation",
   "FateAspectTracker.aspecttrackerwindow.tags.boost": "boost",
-  "FateAspectTracker.aspecttrackerwindow.tags.resources": "resources"
+  "FateAspectTracker.aspecttrackerwindow.tags.resources": "resources",
+
+  "FateAspectTracker.aspectText.error": "You dragged the aspect outside the canvas"
 }

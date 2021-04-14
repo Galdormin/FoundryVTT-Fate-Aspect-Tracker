@@ -115,11 +115,10 @@ export class Tracker {
     await this.store();
   }
 
-  /** Check whether there are any incomplete aspects. **/
-  get incomplete() {
-    return this.aspects.some((aspect) => !aspect.done);
-  }
-
+  /**
+   * Increase the number of free invoke of the aspect at the given 'index'.
+   * @param {number} index is the index of the aspect to increase the invoke
+   **/
   async increaseInvoke(index) {
     const aspect = this.aspects[index];
     aspect.invoke++;
@@ -127,11 +126,51 @@ export class Tracker {
     await this.store();
   }
 
+  /**
+   * Decrease the number of free invoke of the aspect at the given 'index'.
+   * @param {number} index is the index of the aspect to decrease the invoke
+   **/
   async decreaseInvoke(index) {
     const aspect = this.aspects[index];
     if(aspect.invoke > 0)
       aspect.invoke--;
 
     await this.store();
+  }
+
+  async creatAspectText(index, posx, posy) {
+    const aspect = this.aspects[index];
+
+    // Compute cursor position on the canvas from canvas position and cursor position on the screen (posx, posy)
+    const coordx = (posx - window.innerWidth/2) / game.scenes.viewed._viewPosition.scale + game.scenes.viewed._viewPosition.x;
+    const coordy = (posy - window.innerHeight/2) / game.scenes.viewed._viewPosition.scale + game.scenes.viewed._viewPosition.y;
+    
+    if (coordx > 0 && coordx < game.scenes.viewed.data.width && coordy > 0 && coordy < game.scenes.viewed.data.height) {
+      const text = aspect.description + "  ( " + aspect.invoke + " )";
+      const size = game.scenes.viewed.data.width*(1/100);
+      const height = size * 2;
+      const width = (text.length * size / 1.5);
+
+      Drawing.create({
+        type: CONST.DRAWING_TYPES.RECTANGLE,
+        author: game.user.id,
+        x: coordx - width/2,
+        y: coordy - height/2,
+        width: width,
+        height: height,
+        fillType: CONST.DRAWING_FILL_TYPES.SOLID,
+        fillColor: "#FFFFFF",
+        fillAlpha: 1,
+        strokeWidth: 2,
+        strokeColor: "#000000",
+        strokeAlpha: 1,
+        text: text,
+        fontSize: size,
+        textColor: "#b96a6a",
+        points: []
+      }, {parent: game.scenes.viewed});
+    } else {
+      ui.notifications.warn(game.i18n.localize("FateAspectTracker.aspectText.error"));
+    }
   }
 }

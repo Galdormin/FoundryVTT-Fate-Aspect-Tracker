@@ -46,12 +46,17 @@ export class AspectTrackerWindow extends Application {
     const listEl = html.find("#fate-aspect-tracker-list").get(0);
     if (listEl) {
       Sortable.create(listEl, {
+        revertOnSpill: true,
         onEnd: async (evt) => {
           if (evt.oldIndex == evt.newIndex) return;
 
           const list = window.aspectTrackerWindow.getData();
           await list.moveAspect(evt.oldIndex, evt.newIndex);
-          window.aspectTrackerWindow.render(true);
+        },
+        onSpill: async (evt) => {
+          const list = window.aspectTrackerWindow.getData();
+          await list.creatAspectText(evt.oldIndex, evt.originalEvent.clientX, evt.originalEvent.clientY);
+          //console.log(evt);
         },
       });
     }
