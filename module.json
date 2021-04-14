@@ -4,7 +4,7 @@
     "title": "Fate Aspect Tracker",
     "description": "An Aspect Tracker for any Fate RPG.",
     "version": "0.1",
-    "author": "Galdormin",
+    "author": "Théo Plénet",
     "url": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker",
     "bugs": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/issues",
     "allowBugReporter": true,
