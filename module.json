@@ -8,7 +8,7 @@
     "url": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker",
     "bugs": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/issues",
     "allowBugReporter": true,
-    "manifest": "https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/releases/latest/download/module.json",
+    "manifest": "https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/master/module.json",
     "download": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/releases/latest/download/module.zip",
     "media": [],
     "library": false,

@@ -6,6 +6,8 @@ The module can be opened with the **book button** in the **scene menu**, **token
 
 **Warning.** The data is recorded on a journal entrey named *"_aspect_tracker"* which is created by the module if it does not exist. If you delete this journal entry, you have to **reload** the game so that the module creates a new empty journal.
 
+**Download.** https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/master/module.json
+
 ## Screenshot
 
 ![Fate Aspect Tracker with different aspects](screenshot.png)
