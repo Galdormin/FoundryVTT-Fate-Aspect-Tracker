@@ -6,6 +6,10 @@ The module can be opened with the **book button** in the **scene menu**, **token
 
 **Warning.** The data is recorded on a journal entrey named *"_aspect_tracker"* which is created by the module if it does not exist. If you delete this journal entry, you have to **reload** the game so that the module creates a new empty journal.
 
+## Screenshot
+
+![Fate Aspect Tracker with different aspects](screenshot.png)
+
 ## License
 
 This work is licensed under the [MIT license](LICENSE), as well as [Foundry Virtual Tabletop EULA - Limited License Agreement for Module Development](https://foundryvtt.com/article/license/).
