@@ -162,6 +162,8 @@ export class Tracker {
     const coordy = (posy - window.innerHeight/2) / game.scenes.viewed._viewPosition.scale + game.scenes.viewed._viewPosition.y;
     
     if (coordx > 0 && coordx < game.scenes.viewed.data.width && coordy > 0 && coordy < game.scenes.viewed.data.height) {
+      const defaultDrawing = game.settings.get("core", "defaultDrawingConfig");
+      
       const text = aspect.description + "  ( " + aspect.invoke + " )";
       const size = game.scenes.viewed.data.width*(1/100);
       const height = size * 2;
@@ -175,14 +177,14 @@ export class Tracker {
         width: width,
         height: height,
         fillType: CONST.DRAWING_FILL_TYPES.SOLID,
-        fillColor: "#FFFFFF",
-        fillAlpha: 1,
-        strokeWidth: 2,
-        strokeColor: "#000000",
-        strokeAlpha: 1,
+        fillColor: defaultDrawing.fillColor,
+        fillAlpha: defaultDrawing.fillAlpha,
+        strokeWidth: defaultDrawing.strokeWidth,
+        strokeColor: defaultDrawing.strokeColor,
+        strokeAlpha: defaultDrawing.strokeAlpha,
         text: text,
         fontSize: size,
-        textColor: "#b96a6a",
+        textColor: defaultDrawing.textColor,
         points: []
       }, {parent: game.scenes.viewed});
 
