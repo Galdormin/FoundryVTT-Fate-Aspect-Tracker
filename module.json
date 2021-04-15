@@ -37,7 +37,6 @@
         "lang/en.json",
         "styles/fate-aspect-tracker.css",
         "templates/aspect-item-form.hbs",
-        "templates/aspect-list-item.hbs",
         "templates/aspect-list.hbs"
     ],
     "dependencies": [

@@ -11,7 +11,6 @@ import { RGBColor } from "./colors.js";
 async function preloadTemplates() {
   const templates = [
     "modules/fate-aspect-tracker/templates/aspect-list.hbs",
-    "modules/fate-aspect-tracker/templates/aspect-list-item.hbs",
     "modules/fate-aspect-tracker/templates/aspect-item-form.hbs",
   ];
 
