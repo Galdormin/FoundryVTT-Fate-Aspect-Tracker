@@ -4,6 +4,8 @@
 
 The module can be opened with the **book button** in the **scene menu**, **token tab**.
 
+Aspects can be dragged and dropped onto the scene to create a text box with the aspect description and the number of free invoke in it. Updating the aspect through the tracker will result in the text box to be changed as well.
+
 **Warning.** The data is recorded on a journal entrey named *"_aspect_tracker"* which is created by the module if it does not exist. If you delete this journal entry, you have to **reload** the game so that the module creates a new empty journal.
 
 **Download.** https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/master/module.json
