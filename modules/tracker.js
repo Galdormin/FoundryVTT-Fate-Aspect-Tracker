@@ -16,9 +16,10 @@ export class Aspect {
    * @param {string} description is the aspect's description.
    * @param {number} tag is the aspect's optional tag.
    * @param {string | null} color is the aspect's color.
-   * @param {number} invoke is the number of free invoke
+   * @param {number} invoke is the number of free invoke.
+   * @param {Array<string>} drawings is the array of drawing id. 
    **/
-  constructor(description = "", tag = TAGS.NONE, color = null, invoke = 0) {
+  constructor(description = "", tag = TAGS.NONE, color = null, invoke = 0, drawings = []) {
     /** The aspect's description. **/
     this.description = description;
     /** The aspect's tag. */
@@ -27,6 +28,8 @@ export class Aspect {
     this.color = color;
     /** The aspect's number of free invokes **/
     this.invoke = invoke
+    /** The aspect's array of drawing id**/
+    this.drawings = drawings;
   }
 }
 
@@ -89,20 +92,26 @@ export class Tracker {
   async deleteAspect(index) {
     this.aspects.splice(index, 1);
 
+    //@TODO: Effacer tous les drawings lié à l'aspect 
+
     await this.store();
 
     return this.aspects.length;
   }
 
   /**
-   * Updates the aspect description at the given `index`.
+   * Updates the aspect description, tag, color or invoke at the given `index`.
    * @param {number} index is the index to be deleted
    * @param {Aspect} aspect is the updated aspect
    **/
   async updateAspect(index, aspect) {
+    const drawings = this.aspects[index].drawings;
+    aspect.drawings = drawings;
+
     this.aspects[index] = aspect;
 
     await this.store();
+    await this.updateTextAspect(index);
   }
 
   /**
@@ -124,6 +133,7 @@ export class Tracker {
     aspect.invoke++;
 
     await this.store();
+    await this.updateTextAspect(index);
   }
 
   /**
@@ -136,9 +146,16 @@ export class Tracker {
       aspect.invoke--;
 
     await this.store();
+    await this.updateTextAspect(index);
   }
 
-  async creatAspectText(index, posx, posy) {
+  /**
+   * Create a drawing text box with the description and the number of free invoke of the aspect.
+   * @param {number} index is the index of the aspect
+   * @param {number} posx is the position x of the cursor
+   * @param {number} posy is the position y of the cursor
+   **/
+  async creatTextAspect(index, posx, posy) {
     const aspect = this.aspects[index];
 
     // Compute cursor position on the canvas from canvas position and cursor position on the screen (posx, posy)
@@ -151,7 +168,7 @@ export class Tracker {
       const height = size * 2;
       const width = (text.length * size / 1.5);
 
-      Drawing.create({
+      const d = await Drawing.create({
         type: CONST.DRAWING_TYPES.RECTANGLE,
         author: game.user.id,
         x: coordx - width/2,
@@ -169,8 +186,33 @@ export class Tracker {
         textColor: "#b96a6a",
         points: []
       }, {parent: game.scenes.viewed});
+
+      aspect.drawings.push(d.data._id);
+      await this.store();
     } else {
       ui.notifications.warn(game.i18n.localize("FateAspectTracker.aspectText.error"));
     }
+  }
+
+  /**
+   * Update all drawing text box when the aspect is changed.
+   * @param {number} index is the index of the aspect
+   **/
+  async updateTextAspect(index) {
+    const aspect = this.aspects[index];
+    
+    //@TODO: Modifier le texte des drawings et Effacer les drawings qui n'existe plus
+
+    // Update text and width for text box on the canvas
+    aspect.drawings.forEach(id => {
+        const drawing = canvas.drawings.get(id);
+        if (drawing) {
+          const updatedText = aspect.description + "  ( " + aspect.invoke + " )";
+          const size = game.scenes.viewed.data.width*(1/100);
+          const width = (updatedText.length * size / 1.5);
+
+          drawing.update({"text": updatedText, "width": width});
+        }
+    });
   }
 }

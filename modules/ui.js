@@ -55,8 +55,7 @@ export class AspectTrackerWindow extends Application {
         },
         onSpill: async (evt) => {
           const list = window.aspectTrackerWindow.getData();
-          await list.creatAspectText(evt.oldIndex, evt.originalEvent.clientX, evt.originalEvent.clientY);
-          //console.log(evt);
+          await list.creatTextAspect(evt.oldIndex, evt.originalEvent.clientX, evt.originalEvent.clientY);
         },
       });
     }
