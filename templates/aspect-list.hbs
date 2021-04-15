@@ -27,19 +27,9 @@
             </span>
           </p>
 
-          {{#if (eq tag 1)}}
+          {{#if tag}}
           <span class="tag">
-            {{ localize "FateAspectTracker.aspecttrackerwindow.tags.situation" }}
-          </span>
-          {{/if}}
-          {{#if (eq tag 2)}}
-          <span class="tag">
-            {{ localize "FateAspectTracker.aspecttrackerwindow.tags.boost" }}
-          </span>
-          {{/if}}
-          {{#if (eq tag 3)}}
-          <span class="tag">
-            {{ localize "FateAspectTracker.aspecttrackerwindow.tags.resources" }}
+            {{ tag }}
           </span>
           {{/if}}
 

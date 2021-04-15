@@ -20,22 +20,12 @@
         <label for="fieldTags">
           {{ localize "FateAspectTracker.aspectform.field.tag" }}
         </label>
-        <select id="fieldTags" name="tag" data-dtype="Number">
-          {{#select aspect.tag}}
-          <option value=0>{{ localize "FateAspectTracker.aspectform.field.tags.none" }}</option>
-          <option value=1>{{ localize "FateAspectTracker.aspectform.field.tags.situation" }}</option>
-          <option value=2>{{ localize "FateAspectTracker.aspectform.field.tags.boost" }}</option>
-          <option value=3>{{ localize "FateAspectTracker.aspectform.field.tags.resources" }}</option>
-          {{/select}}
-        </select>
-      </div>
-
-      <div class="form-fields">
+        <input type="text" id="fieldTags" class="tags" name="tag" value="{{ aspect.tag }}" data-dtypes="String">
+        
         <label for="fieldUseColor">
           {{ localize "FateAspectTracker.aspectform.field.color" }}
         </label>
-        <input type="checkbox" id="fieldUseColor" name="useColor" data-dtype="Boolean" {{checked aspect.color}}>
-        <input {{#if aspect.color}}value="{{ aspect.color }}" {{/if}} {{ tracker_disabled aspect.color }} type="color"
+        <input value="{{ aspect.color }}" {{ aspect.color }} type="color"
           id="fieldColor" name="color" data-dtype="String">
       </div>
     </fieldset>

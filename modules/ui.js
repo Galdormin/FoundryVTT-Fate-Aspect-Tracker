@@ -179,8 +179,7 @@ class AspectForm extends FormApplication {
 
   /** @override */
   async _updateObject(_event, data) {
-    const color = data.useColor ? data.color : null;
-    const aspect = new Aspect(data.description, data.tag, color, data.invoke);
+    const aspect = new Aspect(data.description, data.tag, data.color, data.invoke);
 
     const list = Tracker.load();
     if (data.index) await list.updateAspect(data.index, aspect);
