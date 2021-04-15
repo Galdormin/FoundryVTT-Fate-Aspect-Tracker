@@ -16,9 +16,10 @@ export class Aspect {
    * @param {string} description is the aspect's description.
    * @param {number} tag is the aspect's optional tag.
    * @param {string | null} color is the aspect's color.
-   * @param {number} invoke is the number of free invoke
+   * @param {number} invoke is the number of free invoke.
+   * @param {Array<string>} drawings is the array of drawing id. 
    **/
-  constructor(description = "", tag = TAGS.NONE, color = null, invoke = 0) {
+  constructor(description = "", tag = TAGS.NONE, color = null, invoke = 0, drawings = []) {
     /** The aspect's description. **/
     this.description = description;
     /** The aspect's tag. */
@@ -27,6 +28,8 @@ export class Aspect {
     this.color = color;
     /** The aspect's number of free invokes **/
     this.invoke = invoke
+    /** The aspect's array of drawing id**/
+    this.drawings = drawings;
   }
 }
 
@@ -87,6 +90,7 @@ export class Tracker {
    * @returns {Promise<number>} the number of managed aspects.
    **/
   async deleteAspect(index) {
+    await this.deleteTextAspect(index);
     this.aspects.splice(index, 1);
 
     await this.store();
@@ -95,13 +99,17 @@ export class Tracker {
   }
 
   /**
-   * Updates the aspect description at the given `index`.
+   * Updates the aspect description, tag, color or invoke at the given `index`.
    * @param {number} index is the index to be deleted
    * @param {Aspect} aspect is the updated aspect
    **/
   async updateAspect(index, aspect) {
-    this.aspects[index] = aspect;
+    const drawings = this.aspects[index].drawings;
+    aspect.drawings = drawings;
 
+    this.aspects[index] = aspect;
+    
+    await this.updateTextAspect(index);
     await this.store();
   }
 
@@ -115,23 +123,149 @@ export class Tracker {
     await this.store();
   }
 
-  /** Check whether there are any incomplete aspects. **/
-  get incomplete() {
-    return this.aspects.some((aspect) => !aspect.done);
-  }
-
+  /**
+   * Increase the number of free invoke of the aspect at the given 'index'.
+   * @param {number} index is the index of the aspect to increase the invoke
+   **/
   async increaseInvoke(index) {
     const aspect = this.aspects[index];
     aspect.invoke++;
-
+    
+    await this.updateTextAspect(index);
     await this.store();
   }
 
+  /**
+   * Decrease the number of free invoke of the aspect at the given 'index'.
+   * @param {number} index is the index of the aspect to decrease the invoke
+   **/
   async decreaseInvoke(index) {
     const aspect = this.aspects[index];
     if(aspect.invoke > 0)
       aspect.invoke--;
 
+    await this.updateTextAspect(index);
     await this.store();
+  }
+
+  /**
+   * Create a drawing text box with the description and the number of free invoke of the aspect.
+   * @param {number} index is the index of the aspect
+   * @param {number} posx is the position x of the cursor
+   * @param {number} posy is the position y of the cursor
+   **/
+  async creatTextAspect(index, posx, posy) {
+    const aspect = this.aspects[index];
+
+    // Compute cursor position on the canvas from canvas position and cursor position on the screen (posx, posy)
+    const coordx = (posx - window.innerWidth/2) / game.scenes.viewed._viewPosition.scale + game.scenes.viewed._viewPosition.x;
+    const coordy = (posy - window.innerHeight/2) / game.scenes.viewed._viewPosition.scale + game.scenes.viewed._viewPosition.y;
+    
+    if (coordx > 0 && coordx < game.scenes.viewed.data.width && coordy > 0 && coordy < game.scenes.viewed.data.height) {
+      const text = aspect.description + "  ( " + aspect.invoke + " )";
+      const size = game.scenes.viewed.data.width*(1/100);
+      const height = size * 2;
+      const width = (text.length * size / 1.5);
+
+      const d = await Drawing.create({
+        type: CONST.DRAWING_TYPES.RECTANGLE,
+        author: game.user.id,
+        x: coordx - width/2,
+        y: coordy - height/2,
+        width: width,
+        height: height,
+        fillType: CONST.DRAWING_FILL_TYPES.SOLID,
+        fillColor: "#FFFFFF",
+        fillAlpha: 1,
+        strokeWidth: 2,
+        strokeColor: "#000000",
+        strokeAlpha: 1,
+        text: text,
+        fontSize: size,
+        textColor: "#b96a6a",
+        points: []
+      }, {parent: game.scenes.viewed});
+
+      aspect.drawings.push(d.data._id);
+      await this.store();
+    } else {
+      ui.notifications.warn(game.i18n.localize("FateAspectTracker.aspectText.error"));
+    }
+  }
+
+  /**
+   * Update all drawing text box of the aspect.
+   * @param {number} index is the index of the aspect
+   **/
+  async updateTextAspect(index) {
+    const aspect = this.aspects[index];
+    
+    let newDrawings = [];
+
+    // New Text
+    const updatedText = aspect.description + "  ( " + aspect.invoke + " )";
+
+    // Update text and width for text box on the canvas
+    aspect.drawings.forEach(id => {
+        const drawing = canvas.drawings.get(id);
+        if (drawing) {
+          newDrawings.push(id);
+
+          const size = game.scenes.viewed.data.width*(1/100);
+          const width = (updatedText.length * size / 1.5);
+
+          drawing.update({"text": updatedText, "width": width});
+        }
+    });
+
+    // Update all other textbox on all other scene
+    game.scenes.forEach(scene => {
+      if (scene !== game.scenes.viewed) {
+        const ds = scene.data.drawings.map(drawing => {
+          if (aspect.drawings.includes(drawing._id)) {
+            newDrawings.push(drawing._id);
+
+            const size = scene.data.width*(1/100);
+            const width = (updatedText.length * size / 1.5);
+
+            drawing.text = updatedText;
+            drawing.width = width;
+          }
+          return drawing;
+        });
+        console.log(scene.data.drawings);
+        scene.update({"drawings":ds});
+      }
+    });
+
+    // Replace drawings with existing textbox (i.e. Remove from list deleted textbox)
+    aspect.drawings = newDrawings;
+  }
+
+  /**
+   * Delete all drawing text box of the aspect.
+   * @param {number} index is the index of the aspect
+   **/
+  async deleteTextAspect(index) {
+    const aspect = this.aspects[index];
+    
+    // Delete all textbox on the viewed scene
+    aspect.drawings.forEach(id => {
+        const drawing = canvas.drawings.get(id);
+        if (drawing) {
+          drawing.delete();
+        }
+    });
+
+    // Delete all other textbox on all other scene
+    game.scenes.forEach(scene => {
+      if (scene !== game.scenes.viewed) {
+        const ds = scene.data.drawings.filter(drawing => {
+          return !aspect.drawings.includes(drawing._id);
+        });
+
+        scene.update({"drawings":ds});
+      }
+    });
   }
 }
