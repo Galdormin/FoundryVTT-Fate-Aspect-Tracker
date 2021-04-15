@@ -2,24 +2,16 @@
 
 import Socket from "./socket.js";
 
-/** The selection of optional tags. **/
-const TAGS = {
-  NONE: 0,
-  SITUATION: 1,
-  BOOST: 2,
-  RESOURCES: 3,
-};
-
 export class Aspect {
   /**
    * Create a new aspect with the given `description`.
    * @param {string} description is the aspect's description.
-   * @param {number} tag is the aspect's optional tag.
-   * @param {string | null} color is the aspect's color.
+   * @param {string} tag is the aspect's optional tag.
+   * @param {string} color is the aspect's color.
    * @param {number} invoke is the number of free invoke.
    * @param {Array<string>} drawings is the array of drawing id. 
    **/
-  constructor(description = "", tag = TAGS.NONE, color = null, invoke = 0, drawings = []) {
+  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = []) {
     /** The aspect's description. **/
     this.description = description;
     /** The aspect's tag. */
@@ -235,7 +227,6 @@ export class Tracker {
           }
           return drawing;
         });
-        console.log(scene.data.drawings);
         scene.update({"drawings":ds});
       }
     });

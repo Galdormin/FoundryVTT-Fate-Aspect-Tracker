@@ -14,9 +14,11 @@ async function preloadTemplates() {
     "modules/fate-aspect-tracker/templates/aspect-item-form.hbs",
   ];
 
-  Handlebars.registerHelper("tracker_disabled", (value) =>
-    !value ? "disabled" : ""
-  );
+  Handlebars.registerHelper("tags", function(tag, options) {
+    const tags = tag.split(',');
+    const tagsAsHtml = tags.map(tag => options.fn(tag));
+    return tagsAsHtml.join("\n");
+  });
 
   return loadTemplates(templates);
 }
@@ -159,13 +161,6 @@ class AspectForm extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // just to avoid confusion, we disable the color input based on the checkbox
-    html.on("change", "input#fieldUseColor", function () {
-      jQuery("input#fieldColor").prop(
-        "disabled",
-        !jQuery(this).prop("checked")
-      );
-    });
   }
 
   /** @override */
@@ -179,8 +174,7 @@ class AspectForm extends FormApplication {
 
   /** @override */
   async _updateObject(_event, data) {
-    const color = data.useColor ? data.color : null;
-    const aspect = new Aspect(data.description, data.tag, color, data.invoke);
+    const aspect = new Aspect(data.description, data.tag, data.color, data.invoke);
 
     const list = Tracker.load();
     if (data.index) await list.updateAspect(data.index, aspect);
