@@ -222,12 +222,23 @@ export class Tracker {
   async deleteTextAspect(index) {
     const aspect = this.aspects[index];
     
-    // Update textbox on the canvas
+    // Delete all textbox on the viewed scene
     aspect.drawings.forEach(id => {
         const drawing = canvas.drawings.get(id);
         if (drawing) {
           drawing.delete();
         }
+    });
+
+    // Delete all other textbox on all other scene
+    game.scenes.forEach(scene => {
+      if (scene !== game.scenes.viewed) {
+        const ds = scene.data.drawings.filter(drawing => {
+          return !aspect.drawings.includes(drawing._id);
+        });
+
+        scene.update({"drawings":ds});
+      }
     });
   }
 }
