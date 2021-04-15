@@ -90,9 +90,8 @@ export class Tracker {
    * @returns {Promise<number>} the number of managed aspects.
    **/
   async deleteAspect(index) {
+    await this.deleteTextAspect(index);
     this.aspects.splice(index, 1);
-
-    //@TODO: Effacer tous les drawings lié à l'aspect 
 
     await this.store();
 
@@ -195,7 +194,7 @@ export class Tracker {
   }
 
   /**
-   * Update all drawing text box when the aspect is changed.
+   * Update all drawing text box of the aspect.
    * @param {number} index is the index of the aspect
    **/
   async updateTextAspect(index) {
@@ -212,6 +211,22 @@ export class Tracker {
           const width = (updatedText.length * size / 1.5);
 
           drawing.update({"text": updatedText, "width": width});
+        }
+    });
+  }
+
+  /**
+   * Delete all drawing text box of the aspect.
+   * @param {number} index is the index of the aspect
+   **/
+  async deleteTextAspect(index) {
+    const aspect = this.aspects[index];
+    
+    // Update textbox on the canvas
+    aspect.drawings.forEach(id => {
+        const drawing = canvas.drawings.get(id);
+        if (drawing) {
+          drawing.delete();
         }
     });
   }
