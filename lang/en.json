@@ -18,7 +18,7 @@
   "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Delete Aspect",
   "FateAspectTracker.aspecttrackerwindow.editaspect": "Edit Aspect",
   "FateAspectTracker.aspecttrackerwindow.newaspect": "New Aspect",
-  "FateAspectTracker.aspecttrackerwindow.placeholder": "There's no aspect at the moment. Add a new aspect to get started.",
+  "FateAspectTracker.aspecttrackerwindow.placeholder": "There's no aspect at the moment.",
   "FateAspectTracker.aspecttrackerwindow.tags.situation": "situation",
   "FateAspectTracker.aspecttrackerwindow.tags.boost": "boost",
   "FateAspectTracker.aspecttrackerwindow.tags.resources": "resources",

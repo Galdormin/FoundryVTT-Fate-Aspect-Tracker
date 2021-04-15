@@ -1,8 +1,60 @@
 <div>
-  {{#if aspects }}
+  {{#if tracker.aspects }}
   <ol id="fate-aspect-tracker-list">
-    {{#each aspects}}
-    {{> modules/fate-aspect-tracker/templates/aspect-list-item.hbs }}
+    {{#each tracker.aspects}}
+      <li>
+        <div class="flexrow">
+          
+          {{#if ../GM}}
+          <a title="inc" class="aspect-control" data-index="{{ @index }}" data-action="aspect-increase-invoke">
+            <i class="fas fa-plus"></i>
+          </a>
+          {{/if}}
+
+          <span class="invoke">
+            {{ invoke }}
+          </span>
+
+          {{#if ../GM}}
+          <a title="dec" class="aspect-control" data-index="{{ @index }}" data-action="aspect-decrease-invoke">
+            <i class="fas fa-minus"></i>
+          </a>
+          {{/if}}
+
+          <p class="aspect-description" {{#if color}}style="color: {{ color }}" {{/if}}>
+            <span class="description">
+              {{ description }}
+            </span>
+          </p>
+
+          {{#if (eq tag 1)}}
+          <span class="tag">
+            {{ localize "FateAspectTracker.aspecttrackerwindow.tags.situation" }}
+          </span>
+          {{/if}}
+          {{#if (eq tag 2)}}
+          <span class="tag">
+            {{ localize "FateAspectTracker.aspecttrackerwindow.tags.boost" }}
+          </span>
+          {{/if}}
+          {{#if (eq tag 3)}}
+          <span class="tag">
+            {{ localize "FateAspectTracker.aspecttrackerwindow.tags.resources" }}
+          </span>
+          {{/if}}
+
+          {{#if ../GM}}
+          <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.editaspect' }}" class="aspect-control" data-index="{{ @index }}"
+            data-action="aspect-edit">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.deleteaspect' }}" class="aspect-control" data-index="{{ @index }}"
+            data-action="aspect-delete">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+          {{/if}}
+        </div>
+      </li>
     {{/each}}
   </ol>
   {{else}}
@@ -12,8 +64,10 @@
   {{/if}}
 </div>
 
+{{#if GM}}
 <div class="flex0">
   <button class="aspect-new">
     <i class="fas fa-plus"></i> {{ localize "FateAspectTracker.aspecttrackerwindow.newaspect" }}
   </button>
 </div>
+{{/if}}

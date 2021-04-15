@@ -50,12 +50,18 @@ export class AspectTrackerWindow extends Application {
         onEnd: async (evt) => {
           if (evt.oldIndex == evt.newIndex) return;
 
-          const list = window.aspectTrackerWindow.getData();
-          await list.moveAspect(evt.oldIndex, evt.newIndex);
+          const data = window.aspectTrackerWindow.getData();
+          if(data.GM) {
+            const list = data.tracker;
+            await list.moveAspect(evt.oldIndex, evt.newIndex);
+          }
         },
         onSpill: async (evt) => {
-          const list = window.aspectTrackerWindow.getData();
-          await list.creatTextAspect(evt.oldIndex, evt.originalEvent.clientX, evt.originalEvent.clientY);
+          const data = window.aspectTrackerWindow.getData();
+          if(data.GM) {
+            const list = data.tracker;
+            await list.creatTextAspect(evt.oldIndex, evt.originalEvent.clientX, evt.originalEvent.clientY);
+          }
         },
       });
     }
@@ -64,7 +70,7 @@ export class AspectTrackerWindow extends Application {
       const index = jQuery(this).data("index");
       const action = jQuery(this).data("action");
 
-      const list = window.aspectTrackerWindow.getData();
+      const list = window.aspectTrackerWindow.getData().tracker;
 
       switch (action) {
         case "aspect-delete":
@@ -113,9 +119,13 @@ export class AspectTrackerWindow extends Application {
 
   /**
    * @returns {Tracker}
+   * @returns {boolean}
    */
   getData() {
-    return Tracker.load();
+    return {
+      tracker: Tracker.load(),
+      GM: game.user.isGM,
+    };
   }
 }
 
