@@ -108,9 +108,9 @@ export class Tracker {
     aspect.drawings = drawings;
 
     this.aspects[index] = aspect;
-
-    await this.store();
+    
     await this.updateTextAspect(index);
+    await this.store();
   }
 
   /**
@@ -130,9 +130,9 @@ export class Tracker {
   async increaseInvoke(index) {
     const aspect = this.aspects[index];
     aspect.invoke++;
-
-    await this.store();
+    
     await this.updateTextAspect(index);
+    await this.store();
   }
 
   /**
@@ -144,8 +144,8 @@ export class Tracker {
     if(aspect.invoke > 0)
       aspect.invoke--;
 
-    await this.store();
     await this.updateTextAspect(index);
+    await this.store();
   }
 
   /**
@@ -200,19 +200,46 @@ export class Tracker {
   async updateTextAspect(index) {
     const aspect = this.aspects[index];
     
-    //@TODO: Modifier le texte des drawings et Effacer les drawings qui n'existe plus
+    let newDrawings = [];
+
+    // New Text
+    const updatedText = aspect.description + "  ( " + aspect.invoke + " )";
 
     // Update text and width for text box on the canvas
     aspect.drawings.forEach(id => {
         const drawing = canvas.drawings.get(id);
         if (drawing) {
-          const updatedText = aspect.description + "  ( " + aspect.invoke + " )";
+          newDrawings.push(id);
+
           const size = game.scenes.viewed.data.width*(1/100);
           const width = (updatedText.length * size / 1.5);
 
           drawing.update({"text": updatedText, "width": width});
         }
     });
+
+    // Update all other textbox on all other scene
+    game.scenes.forEach(scene => {
+      if (scene !== game.scenes.viewed) {
+        const ds = scene.data.drawings.map(drawing => {
+          if (aspect.drawings.includes(drawing._id)) {
+            newDrawings.push(drawing._id);
+
+            const size = scene.data.width*(1/100);
+            const width = (updatedText.length * size / 1.5);
+
+            drawing.text = updatedText;
+            drawing.width = width;
+          }
+          return drawing;
+        });
+        console.log(scene.data.drawings);
+        scene.update({"drawings":ds});
+      }
+    });
+
+    // Replace drawings with existing textbox (i.e. Remove from list deleted textbox)
+    aspect.drawings = newDrawings;
   }
 
   /**
