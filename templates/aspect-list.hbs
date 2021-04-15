@@ -27,11 +27,13 @@
             </span>
           </p>
 
-          {{#tags tag}}
-            <span class="tag">
-              {{ this }}
-            </span>
-          {{/tags}}
+          {{#if tag}}
+            {{#tags tag}}
+              <span class="tag">
+                {{ this }}
+              </span>
+            {{/tags}}
+          {{/if}}
 
           {{#if ../GM}}
           <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.editaspect' }}" class="aspect-control" data-index="{{ @index }}"
