@@ -1,5 +1,9 @@
 # Patch Notes:
 
+## Version 0.4.1
+
+* Fix tooltip for hide aspect and decrease aspect
+
 ## Version 0.4
 
 * Aspect can now be hidden from player.
