@@ -25,6 +25,16 @@
             "lang": "en",
             "name": "English",
             "path": "lang/en.json"
+        },
+        {
+            "lang": "it",
+            "name": "Italiano",
+            "path": "lang/it.json"
+        },
+        {
+            "lang": "fr",
+            "name": "Français",
+            "path": "lang/fr.json"
         }
     ],
     "includes": [

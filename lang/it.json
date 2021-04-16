@@ -1,0 +1,27 @@
+{
+  "FateAspectTracker.initializing": "Inizializzazione del gestori di aspetti",
+
+  "FateAspectTracker.aspectform.title": "Modifica Aspetto",
+  "FateAspectTracker.aspectform.field.color": "Colore",
+  "FateAspectTracker.aspectform.field.tag": "Tag",
+  "FateAspectTracker.aspectform.field.tags.none": "Nessuno",
+  "FateAspectTracker.aspectform.field.tags.situation": "Situazione",
+  "FateAspectTracker.aspectform.field.tags.boost": "Beneficio",
+  "FateAspectTracker.aspectform.field.tags.resources": "Risorse",
+  "FateAspectTracker.aspectform.field.description": "Descrizione",
+  "FateAspectTracker.aspectform.field.invoke": "Invocazioni",
+  "FateAspectTracker.aspectform.customization": "Personalizza",
+  "FateAspectTracker.aspectform.createaspect": "Crea Aspetto",
+  "FateAspectTracker.aspectform.updateaspect": "Aggiorna Aspetto",
+
+  "FateAspectTracker.aspecttrackerwindow.title": "Gestore degli Aspetti di Fate",
+  "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Cancella Aspetto",
+  "FateAspectTracker.aspecttrackerwindow.editaspect": "Modifica Aspetto",
+  "FateAspectTracker.aspecttrackerwindow.newaspect": "Nuovo Aspetto",
+  "FateAspectTracker.aspecttrackerwindow.placeholder": "Non ci sono Aspetti al momento",
+  "FateAspectTracker.aspecttrackerwindow.tags.situation": "situazione",
+  "FateAspectTracker.aspecttrackerwindow.tags.boost": "beneficio",
+  "FateAspectTracker.aspecttrackerwindow.tags.resources": "risorse",
+
+  "FateAspectTracker.aspectText.error": "Hai trascinato l'Aspetto nell'Area di Gioco"
+}
