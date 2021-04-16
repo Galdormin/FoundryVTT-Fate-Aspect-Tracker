@@ -13,6 +13,9 @@
   "FateAspectTracker.aspectform.customization": "Personnalisation",
   "FateAspectTracker.aspectform.createaspect": "Créer l'aspect",
   "FateAspectTracker.aspectform.updateaspect": "Modifier l'aspect",
+  "FateAspectTracker.aspecttrackerwindow.hideaspect": "Cacher l'aspect",
+  "FateAspectTracker.aspecttrackerwindow.increaseinvoke": "Augmenter les invocations",
+  "FateAspectTracker.aspecttrackerwindow.decreaseinvoke": "Diminuer les invocations",
 
   "FateAspectTracker.aspecttrackerwindow.title": "Gestionnaire d'Aspect Fate",
   "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Supprimer l'Aspect",
