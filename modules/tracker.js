@@ -10,8 +10,9 @@ export class Aspect {
    * @param {string} color is the aspect's color.
    * @param {number} invoke is the number of free invoke.
    * @param {Array<string>} drawings is the array of drawing id. 
+   * @param {boolean} hidden is the aspect hidden from the player.
    **/
-  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = []) {
+  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = [], hidden = false) {
     /** The aspect's description. **/
     this.description = description;
     /** The aspect's tag. */
@@ -22,6 +23,8 @@ export class Aspect {
     this.invoke = invoke
     /** The aspect's array of drawing id**/
     this.drawings = drawings;
+    /** The aspect's hidden property **/
+    this.hidden = hidden;
   }
 }
 
@@ -278,5 +281,17 @@ export class Tracker {
         scene.update({"drawings":ds});
       }
     });
+  }
+
+  /**
+   * Toggle visibility of the aspect given by its index
+  * @param {number} index is the index of the aspect
+   **/
+  async toggleVisibility(index) {
+    const aspect = this.aspects[index];
+
+    aspect.hidden = !aspect.hidden;
+
+    await this.store();
   }
 }

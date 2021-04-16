@@ -20,6 +20,13 @@ async function preloadTemplates() {
     return tagsAsHtml.join("\n");
   });
 
+  Handlebars.registerHelper('hideAspect', function(hidden, GM, options) {
+    if(!hidden || GM) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   return loadTemplates(templates);
 }
 
@@ -85,6 +92,9 @@ export class AspectTrackerWindow extends Application {
           break;
         case "aspect-edit":
           new AspectForm(list.aspects[index], index).render(true);
+          break;
+        case "aspect-toggle":
+          await list.toggleVisibility(index);
           break;
         default:
           return;
