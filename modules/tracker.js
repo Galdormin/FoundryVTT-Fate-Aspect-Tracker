@@ -77,6 +77,24 @@ export class Tracker {
   }
 
   /**
+   * Add a new aspect to the tracker from the data.
+   * @param {string} description is the aspect's description.
+   * @param {string} tag is the aspect's optional tag.
+   * @param {string} color is the aspect's color.
+   * @param {number} invoke is the number of free invoke.
+   * @returns {Promise<number>} the number of managed aspects.
+   **/
+   async addAspectFromData(description = "", tag = "", color = "#000000", invoke = 0) {
+    const aspect = new Aspect(description, tag, color, invoke);
+    
+    this.aspects.push(aspect);
+
+    await this.store();
+
+    return this.aspects.length;
+  }
+
+  /**
    * Deletes the aspect at the given `index`.
    * @param {number} index is the index to be deleted
    * @returns {Promise<number>} the number of managed aspects.
