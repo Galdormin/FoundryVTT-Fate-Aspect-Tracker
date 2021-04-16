@@ -1,5 +1,14 @@
 # Patch Notes:
 
+## Version 0.4
+
+* Aspect can now be hidden from player.
+* A macro folder has beed added.
+  * `Weather to Aspect` macro add an aspect with the weather from the module `Calendar/Weather`.
+* Translation of the module
+  * French by @Galdormin
+  * Italian by @smoothingplane
+
 ## Version 0.3
 
 * Aspect text box now use default drawing settings.
