@@ -14,6 +14,10 @@ Aspects can be dragged and dropped onto the scene to create a text box with the 
 
 ![Fate Aspect Tracker with different aspects](screenshot.png)
 
+## Macros
+
+See [Macro](macro)
+
 ## Patch Notes
 
 See [CHANGELOG.md](CHANGELOG.md)
