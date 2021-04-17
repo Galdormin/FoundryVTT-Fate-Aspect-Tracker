@@ -202,10 +202,11 @@ export class Tracker {
     const aspect = this.aspects[index];
 
     // Compute cursor position on the canvas from canvas position and cursor position on the screen (posx, posy)
-    const coordx = (posx - window.innerWidth/2) / game.scenes.viewed._viewPosition.scale + game.scenes.viewed._viewPosition.x;
-    const coordy = (posy - window.innerHeight/2) / game.scenes.viewed._viewPosition.scale + game.scenes.viewed._viewPosition.y;
+    const s_pos = game.scenes.viewed._viewPosition; 
+    const coordx = (posx - window.innerWidth/2) / s_pos.scale + s_pos.x;
+    const coordy = (posy - window.innerHeight/2) / s_pos.scale + s_pos.y;
     
-    if (coordx > 0 && coordx < game.scenes.viewed.data.width && coordy > 0 && coordy < game.scenes.viewed.data.height) {
+    if (coordx > 0 && coordx < canvas.dimensions.width && coordy > 0 && coordy < canvas.dimensions.height) {
       const defaultDrawing = game.settings.get("core", "defaultDrawingConfig");
       
       const text = aspect.description + "  ( " + aspect.invoke + " )";
