@@ -28,6 +28,7 @@
   "FateAspectTracker.aspecttrackerwindow.tags.situation": "situazione",
   "FateAspectTracker.aspecttrackerwindow.tags.boost": "beneficio",
   "FateAspectTracker.aspecttrackerwindow.tags.resources": "risorse",
+  "FateAspectTracker.aspecttrackerwindow.showplayers": "Show Players",
 
   "FateAspectTracker.aspectText.error": "Hai trascinato l'Aspetto nell'Area di Gioco"
 }
