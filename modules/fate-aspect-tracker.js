@@ -31,3 +31,7 @@ Hooks.on("getSceneControlButtons", function(controls) {
     onClick: () => window.aspectTrackerWindow.render(true)
   });
 });
+
+Hooks.on("updateDrawing", function(controls) {
+  console.log(controls);
+});
