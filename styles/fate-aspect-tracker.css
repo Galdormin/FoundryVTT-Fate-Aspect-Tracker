@@ -54,3 +54,7 @@
   flex: 0.1;
   text-align: center;
 }
+
+#fate-aspect-tracker-form .form-source{
+  margin-top: 5px;
+}
