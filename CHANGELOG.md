@@ -1,5 +1,13 @@
 # Patch Notes:
 
+## Version 0.5.0
+
+* Aspect can now be stored in scene flag. This cause aspect to be loaded only when you are on the right scene.
+* `Show Player` button on the header show the Fate Aspect Tracker window to the players
+* Hide Aspect button now hide text box link to the aspect
+* Fix Tex box are now correctly updated on the players view
+* Fix Drag & Drop in scene with padding
+
 ## Version 0.4.1
 
 * Fix tooltip for hide aspect and decrease aspect
