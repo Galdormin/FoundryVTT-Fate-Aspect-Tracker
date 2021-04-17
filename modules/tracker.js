@@ -233,24 +233,22 @@ export class Tracker {
     });
 
     // Update all other textbox on all other scene
-    /*game.scenes.forEach(scene => {
+    game.scenes.forEach(scene => {
       if (scene !== game.scenes.viewed) {
-        const ds = scene.data.drawings.map(drawing => {
-          if (aspect.drawings.includes(drawing._id)) {
-            newDrawings.push(drawing._id);
-
-            const size = scene.data.width*(1/100);
+        const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
+          if(aspect.drawings.includes(drawing._id)) {
+            const size = game.scenes.viewed.data.width*(1/100);
             const width = (updatedText.length * size / 1.5);
 
-            drawing.text = updatedText;
-            drawing.width = width;
+            return { _id: drawing._id, text: updatedText, width: width }
+          } else {
+            return null
           }
-          return drawing;
-        });
-        console.log(scene);
-        scene.update({"data.drawings":ds});
+        }).filter(d => d != null);
+
+        scene.updateEmbeddedEntity('Drawing', drawings);
       }
-    });*/
+    });
 
     // Replace drawings with existing textbox (i.e. Remove from list deleted textbox)
     // aspect.drawings = newDrawings;
@@ -264,7 +262,6 @@ export class Tracker {
     const aspect = this.aspects[index];
     
     // Delete all textbox on the viewed scene
-    // Update text aspect on the viewed scene
     canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
       if (aspect.drawings.includes(drawing.data._id)) {
         drawing.delete();
@@ -313,16 +310,14 @@ export class Tracker {
     // Hide all other textbox on all other scene
     game.scenes.forEach(scene => {
       if (scene !== game.scenes.viewed) {
-        const ds = scene.getEmbeddedCollection("Drawing").map(drawing => {
-          if (aspect.drawings.includes(drawing._id)) {
-            drawing.hidden = aspect.hidden;
-            drawing.text = "Test";
-          }
-          
-          return drawing;
-        });
+        const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
+          if(aspect.drawings.includes(drawing._id))
+            return { _id: drawing._id, hidden: aspect.hidden }
+          else
+            return null
+        }).filter(d => d != null);
 
-        scene.update({"drawings":ds});
+        scene.updateEmbeddedEntity('Drawing', drawings);
       }
     });
 

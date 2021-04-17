@@ -32,6 +32,3 @@ Hooks.on("getSceneControlButtons", function(controls) {
   });
 });
 
-Hooks.on("updateDrawing", function(controls) {
-  console.log(controls);
-});
