@@ -3,6 +3,7 @@
 
 import { Aspect, Tracker } from "./tracker.js";
 import { RGBColor } from "./colors.js";
+import Socket from "./socket.js";
 
 /**
  * Parse handlebar templates included with the aspect tracker.
@@ -126,6 +127,7 @@ export class AspectTrackerWindow extends Application {
       const borderColor = control.css("color");
       tag.css("border-color", borderColor);
     });
+    
   }
 
   /**
@@ -137,6 +139,28 @@ export class AspectTrackerWindow extends Application {
       tracker: Tracker.load(),
       GM: game.user.isGM,
     };
+  }
+
+  /**
+   * 
+   * 
+   */
+   _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+
+    // Edit mode button to toggle which interactive elements are visible on the sheet.
+    if (game.user?.isGM) {
+      buttons.unshift(
+          {
+              class: "fat-show-player",
+              label: game.i18n.localize("FateAspectTracker.aspecttrackerwindow.showplayers"),
+              icon: "fas fa-eye",
+              onclick: (e) => Socket.showTrackerToPlayers(),
+          }
+      );
+    }
+
+    return buttons;
   }
 }
 
