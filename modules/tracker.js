@@ -251,40 +251,38 @@ export class Tracker {
     // New Text
     const updatedText = aspect.description + "  ( " + aspect.invoke + " )";
 
-    // Update text and width for text box on the canvas
-    aspect.drawings.forEach(id => {
-        const drawing = canvas.drawings.get(id);
-        if (drawing) {
-          newDrawings.push(id);
+    // Update text aspect on the viewed scene
+    canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
+      if (aspect.drawings.includes(drawing.data._id)) {
+        newDrawings.push(drawing.data._id);
+        
+        const size = game.scenes.viewed.data.width*(1/100);
+        const width = (updatedText.length * size / 1.5);
 
-          const size = game.scenes.viewed.data.width*(1/100);
-          const width = (updatedText.length * size / 1.5);
-
-          drawing.update({"text": updatedText, "width": width});
-        }
+        drawing.update({"text": updatedText, "width": width});
+      }
     });
 
     // Update all other textbox on all other scene
     game.scenes.forEach(scene => {
       if (scene !== game.scenes.viewed) {
-        const ds = scene.data.drawings.map(drawing => {
-          if (aspect.drawings.includes(drawing._id)) {
-            newDrawings.push(drawing._id);
-
-            const size = scene.data.width*(1/100);
+        const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
+          if(aspect.drawings.includes(drawing._id)) {
+            const size = game.scenes.viewed.data.width*(1/100);
             const width = (updatedText.length * size / 1.5);
 
-            drawing.text = updatedText;
-            drawing.width = width;
+            return { _id: drawing._id, text: updatedText, width: width }
+          } else {
+            return null
           }
-          return drawing;
-        });
-        scene.update({"drawings":ds});
+        }).filter(d => d != null);
+
+        scene.updateEmbeddedEntity('Drawing', drawings);
       }
     });
 
     // Replace drawings with existing textbox (i.e. Remove from list deleted textbox)
-    aspect.drawings = newDrawings;
+    // aspect.drawings = newDrawings;
   }
 
   /**
@@ -295,17 +293,16 @@ export class Tracker {
     const aspect = this.aspects[index];
     
     // Delete all textbox on the viewed scene
-    aspect.drawings.forEach(id => {
-        const drawing = canvas.drawings.get(id);
-        if (drawing) {
-          drawing.delete();
-        }
+    canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
+      if (aspect.drawings.includes(drawing.data._id)) {
+        drawing.delete();
+      }
     });
 
     // Delete all other textbox on all other scene
     game.scenes.forEach(scene => {
       if (scene !== game.scenes.viewed) {
-        const ds = scene.data.drawings.filter(drawing => {
+        const ds = scene.getEmbeddedCollection("Drawing").filter(drawing => {
           return !aspect.drawings.includes(drawing._id);
         });
 
@@ -322,6 +319,38 @@ export class Tracker {
     const aspect = this.aspects[index];
 
     aspect.hidden = !aspect.hidden;
+
+    await this.toggleVisibilityTextAspect(index);
+    await this.store();
+  }
+
+  /**
+   * Toggle visibility of all text box related the aspect given by its index
+  * @param {number} index is the index of the aspect
+   **/
+   async toggleVisibilityTextAspect(index) {
+    const aspect = this.aspects[index];
+    
+    // Hide text aspect on the viewed scene
+    canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
+      if (aspect.drawings.includes(drawing.data._id)) {
+        drawing.update({hidden:aspect.hidden});
+      }
+    });
+
+    // Hide all other textbox on all other scene
+    game.scenes.forEach(scene => {
+      if (scene !== game.scenes.viewed) {
+        const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
+          if(aspect.drawings.includes(drawing._id))
+            return { _id: drawing._id, hidden: aspect.hidden }
+          else
+            return null
+        }).filter(d => d != null);
+
+        scene.updateEmbeddedEntity('Drawing', drawings);
+      }
+    });
 
     await this.store();
   }
