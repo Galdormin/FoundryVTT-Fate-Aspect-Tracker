@@ -2,6 +2,12 @@
 
 import Socket from "./socket.js";
 
+/** The selection of aspect source. **/
+const SOURCE = {
+  SCENE: 0,
+  GENERAL: 1,
+};
+
 export class Aspect {
   /**
    * Create a new aspect with the given `description`.
@@ -11,8 +17,9 @@ export class Aspect {
    * @param {number} invoke is the number of free invoke.
    * @param {Array<string>} drawings is the array of drawing id. 
    * @param {boolean} hidden is the aspect hidden from the player.
+   * @param {int} source is the source of the aspect.
    **/
-  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = [], hidden = false) {
+  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = [], hidden = false, source = SOURCE.SCENE) {
     /** The aspect's description. **/
     this.description = description;
     /** The aspect's tag. */
@@ -25,6 +32,8 @@ export class Aspect {
     this.drawings = drawings;
     /** The aspect's hidden property **/
     this.hidden = hidden;
+    /** The aspect's source **/
+    this.source = source;
   }
 }
 
@@ -42,26 +51,48 @@ export class Tracker {
    * @return {Tracker} the tracker read from user data
    **/
   static load() {
+    let aspects = [];
+
+    // SCENE Aspect
+    const sceneAspects = game.scenes.viewed.getFlag("fate-aspect-tracker", "aspects");
+
+    if (sceneAspects) {
+      aspects = aspects.concat(JSON.parse(sceneAspects).map((aspect) =>
+        Object.assign(new Aspect(), aspect)
+      ));
+    }
+
+    // GENERAL Aspect
     const journal = game.journal.getName("_aspect_tracker");
-    const savedAspects = journal.data.content;
-    if (!savedAspects) return new Tracker();
+    const journalAspects = journal.data.content;
 
-    const aspects = JSON.parse(savedAspects).map((aspect) =>
-      Object.assign(new Aspect(), aspect)
-    );
+    if (journalAspects) {
+      aspects = aspects.concat(JSON.parse(journalAspects).map((aspect) =>
+        Object.assign(new Aspect(), aspect)
+      ));
+    }
 
-    return new Tracker(aspects);
+    if (aspects.length)
+      return new Tracker(aspects);
+    else
+      return new Tracker();
   }
 
   /** Store the current tracker in the database. **/
   async store() {
-    const aspects = JSON.stringify(this.aspects);
+    const journalAspects = this.aspects.filter(aspect => aspect.source == SOURCE.GENERAL);
+    const sceneAspects = this.aspects.filter(aspect => aspect.source == SOURCE.SCENE);
+    
+    // GENERAL Aspects
     let update = {
-      "content": aspects
+      "content": JSON.stringify(journalAspects)
     };
 
     let journal = game.journal.getName("_aspect_tracker");
     await journal.update(update, {diff: false});
+
+    // SOURCE Aspects
+    await game.scenes.viewed.setFlag("fate-aspect-tracker", "aspects", JSON.stringify(sceneAspects));
 
     Socket.refreshTracker();
   }
