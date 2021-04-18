@@ -210,7 +210,7 @@ export class Tracker {
       const defaultDrawing = game.settings.get("core", "defaultDrawingConfig");
       
       const text = aspect.description + "  ( " + aspect.invoke + " )";
-      const size = game.scenes.viewed.data.width*(1/100);
+      const size = defaultDrawing.fontSize;
       const height = size * 2;
       const width = (text.length * size / 1.5);
 
@@ -256,11 +256,13 @@ export class Tracker {
     canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
       if (aspect.drawings.includes(drawing.data._id)) {
         newDrawings.push(drawing.data._id);
-        
-        const size = game.scenes.viewed.data.width*(1/100);
-        const width = (updatedText.length * size / 1.5);
 
-        drawing.update({"text": updatedText, "width": width});
+        const defaultDrawing = game.settings.get("core", "defaultDrawingConfig");
+        const size = defaultDrawing.fontSize;
+        const width = (updatedText.length * size / 1.5);
+        const height = size * 2;
+
+        drawing.update({"text": updatedText, "width": width, "height": height, "fontSize": size});
       }
     });
 
@@ -269,10 +271,12 @@ export class Tracker {
       if (scene !== game.scenes.viewed) {
         const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
           if(aspect.drawings.includes(drawing._id)) {
-            const size = game.scenes.viewed.data.width*(1/100);
+            const defaultDrawing = game.settings.get("core", "defaultDrawingConfig");
+            const size = defaultDrawing.fontSize;
             const width = (updatedText.length * size / 1.5);
+            const height = size * 2;
 
-            return { _id: drawing._id, text: updatedText, width: width }
+            return { _id: drawing._id, text: updatedText, width: width, height: height, "fontSize": size }
           } else {
             return null
           }
