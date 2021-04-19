@@ -210,7 +210,7 @@ class AspectForm extends FormApplication {
   async _updateObject(_event, data) {
     const aspect = new Aspect(data.description, data.tag, data.color, data.invoke);
 
-    aspect.source = data.source;
+    aspect.globalScope = data.globalScope;
 
     const list = Tracker.load();
     if (data.index) await list.updateAspect(data.index, aspect);

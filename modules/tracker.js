@@ -2,12 +2,6 @@
 
 import Socket from "./socket.js";
 
-/** The selection of aspect source. **/
-const SOURCE = {
-  SCENE: 0,
-  GENERAL: 1,
-};
-
 export class Aspect {
   /**
    * Create a new aspect with the given `description`.
@@ -17,9 +11,9 @@ export class Aspect {
    * @param {number} invoke is the number of free invoke.
    * @param {Array<string>} drawings is the array of drawing id. 
    * @param {boolean} hidden is the aspect hidden from the player.
-   * @param {int} source is the source of the aspect.
+   * @param {boolean} globalScope is the scope of the aspect.
    **/
-  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = [], hidden = false, source = SOURCE.SCENE) {
+  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = [], hidden = false, globalScope = false) {
     /** The aspect's description. **/
     this.description = description;
     /** The aspect's tag. */
@@ -32,8 +26,8 @@ export class Aspect {
     this.drawings = drawings;
     /** The aspect's hidden property **/
     this.hidden = hidden;
-    /** The aspect's source **/
-    this.source = source;
+    /** The aspect's scope **/
+    this.globalScope = globalScope;
   }
 }
 
@@ -53,7 +47,7 @@ export class Tracker {
   static load() {
     let aspects = [];
 
-    // SCENE Aspect
+    // Not Global Aspect
     const sceneAspects = game.scenes.viewed.getFlag("fate-aspect-tracker", "aspects");
 
     if (sceneAspects) {
@@ -62,7 +56,7 @@ export class Tracker {
       ));
     }
 
-    // GENERAL Aspect
+    // Global Aspect
     const journal = game.journal.getName("_aspect_tracker");
     const journalAspects = journal.data.content;
 
@@ -80,10 +74,10 @@ export class Tracker {
 
   /** Store the current tracker in the database. **/
   async store() {
-    const journalAspects = this.aspects.filter(aspect => aspect.source == SOURCE.GENERAL);
-    const sceneAspects = this.aspects.filter(aspect => aspect.source == SOURCE.SCENE);
+    const journalAspects = this.aspects.filter(aspect => aspect.globalScope);
+    const sceneAspects = this.aspects.filter(aspect => !aspect.globalScope);
     
-    // GENERAL Aspects
+    // Global Aspects
     let update = {
       "content": JSON.stringify(journalAspects)
     };
@@ -91,7 +85,7 @@ export class Tracker {
     let journal = game.journal.getName("_aspect_tracker");
     await journal.update(update, {diff: false});
 
-    // SOURCE Aspects
+    // Not Global Aspects
     await game.scenes.viewed.setFlag("fate-aspect-tracker", "aspects", JSON.stringify(sceneAspects));
 
     Socket.refreshTracker();

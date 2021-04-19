@@ -55,6 +55,6 @@
   text-align: center;
 }
 
-#fate-aspect-tracker-form .form-source{
-  margin-top: 5px;
+#fate-aspect-tracker-form .field-scope{
+  flex: 0.6;
 }

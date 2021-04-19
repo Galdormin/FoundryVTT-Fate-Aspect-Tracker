@@ -21,23 +21,17 @@
           {{ localize "FateAspectTracker.aspectform.field.tag" }}
         </label>
         <input type="text" id="fieldTags" class="tags" name="tag" value="{{ aspect.tag }}" data-dtypes="String">
-        <label for="fieldUseColor">
+      </div>
+      <div class="form-fields">
+        <label for="fieldScope" class="field-scope">
+          {{ localize "FateAspectTracker.aspectform.field.scope"}}
+        </label>
+        <input type="checkbox" id="fieldScope" data-dtype="Boolean" name="globalScope" {{ checked aspect.globalScope }}>
+        <label for="fieldUseColor" class="field-color">
           {{ localize "FateAspectTracker.aspectform.field.color" }}
         </label>
         <input value="{{ aspect.color }}" {{ aspect.color }} type="color"
           id="fieldColor" name="color" data-dtype="String">
-      </div>
-
-      <div class="form-fields form-source">
-        <label for="FieldSource">
-          {{ localize "FateAspectTracker.aspectform.field.source.source"}}
-        </label>
-        <select id="fieldSource" name="source" data-dtype="Number">
-          {{#select aspect.source}}
-          <option value="0">{{ localize "FateAspectTracker.aspectform.field.source.scene" }}</option>
-          <option value="1">{{ localize "FateAspectTracker.aspectform.field.source.general" }}</option>
-          {{/select}}
-        </select>
       </div>
     </fieldset>
 
