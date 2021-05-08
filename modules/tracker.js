@@ -225,7 +225,7 @@ export class Tracker {
         fontSize: size,
         textColor: defaultDrawing.textColor,
         points: []
-      }, {parent: game.scenes.viewed});
+      });
 
       aspect.drawings.push(d.data._id);
       await this.store();
