@@ -34,7 +34,7 @@ async function preloadTemplates() {
 export class AspectTrackerWindow extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      id: "fate-aspect-tracker-list",
+      id: "fate-aspect-tracker-app",
       template: "modules/fate-aspect-tracker/templates/aspect-list.hbs",
       width: 400,
       height: 300,
