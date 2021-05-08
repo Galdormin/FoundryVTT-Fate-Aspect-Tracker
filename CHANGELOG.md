@@ -1,5 +1,10 @@
 # Patch Notes:
 
+## Version 0.5.1
+
+* [issue #13] Fixed RangeError
+* Fixed duplicate html id
+
 ## Version 0.5.0
 
 * Aspect can now be stored in scene flag. This cause aspect to be loaded only when you are on the right scene.
