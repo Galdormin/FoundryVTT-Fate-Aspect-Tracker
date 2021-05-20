@@ -3,7 +3,7 @@
     "name": "fate-aspect-tracker",
     "title": "Fate Aspect Tracker",
     "description": "An Aspect Tracker for any Fate RPG.",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "author": "Théo Plénet",
     "url": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker",
     "bugs": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/issues",
@@ -12,8 +12,8 @@
     "download": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/releases/latest/download/module.zip",
     "media": [],
     "library": false,
-    "minimumCoreVersion": "0.7.9",
-    "compatibleCoreVersion": "0.7.9",
+    "minimumCoreVersion": "0.8.4",
+    "compatibleCoreVersion": "0.8.4",
     "esmodules": [
         "modules/fate-aspect-tracker.js"
     ],

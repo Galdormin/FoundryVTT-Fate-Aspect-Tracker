@@ -1,5 +1,9 @@
 # Patch Notes:
 
+## Version 0.6.0
+
+* Fix for 0.8.4
+
 ## Version 0.5.1
 
 * [issue #13] Fixed RangeError
