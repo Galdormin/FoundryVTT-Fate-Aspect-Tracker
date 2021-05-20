@@ -227,7 +227,7 @@ export class Tracker {
         points: []
       });
 
-      aspect.drawings.push(d.data._id);
+      d.forEach( drawing => aspect.drawings.push(drawing.data._id));
       await this.store();
     } else {
       ui.notifications.warn(game.i18n.localize("FateAspectTracker.aspectText.error"));
