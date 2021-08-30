@@ -208,7 +208,7 @@ export class Tracker {
       const height = size * 2;
       const width = (text.length * size / 1.5);
 
-      const d = await Drawing.create({
+      const drawing = {
         type: CONST.DRAWING_TYPES.RECTANGLE,
         author: game.user.id,
         x: coordx - width/2,
@@ -225,7 +225,9 @@ export class Tracker {
         fontSize: size,
         textColor: defaultDrawing.textColor,
         points: []
-      });
+      };
+
+	  const d = await canvas.scene.createEmbeddedDocuments('Drawing', [drawing]);
 
       d.forEach( drawing => aspect.drawings.push(drawing.data._id));
       await this.store();
@@ -245,39 +247,26 @@ export class Tracker {
 
     // New Text
     const updatedText = aspect.description + "  ( " + aspect.invoke + " )";
-
-    // Update text aspect on the viewed scene
-    canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
-      if (aspect.drawings.includes(drawing.data._id)) {
-        newDrawings.push(drawing.data._id);
-        
-        const size = game.scenes.viewed.data.width*(1/100);
-        const width = (updatedText.length * size / 1.5);
-
-        drawing.update({"text": updatedText, "width": width});
-      }
-    });
-
-    // Update all other textbox on all other scene
+	
+    // Update all textbox on all scene
     game.scenes.forEach(scene => {
-      if (scene !== game.scenes.viewed) {
         const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
-          if(aspect.drawings.includes(drawing._id)) {
+          if(aspect.drawings.includes(drawing.data._id)) {
             const size = game.scenes.viewed.data.width*(1/100);
             const width = (updatedText.length * size / 1.5);
 
-            return { _id: drawing._id, text: updatedText, width: width }
+            return { _id: drawing.data._id, text: updatedText, width: width }
           } else {
             return null
           }
         }).filter(d => d != null);
 
-        scene.updateEmbeddedEntity('Drawing', drawings);
-      }
+        scene.updateEmbeddedDocuments('Drawing', drawings);
+		newDrawings = newDrawings.concat(drawings.map(drawing => drawing._id));
     });
 
     // Replace drawings with existing textbox (i.e. Remove from list deleted textbox)
-    // aspect.drawings = newDrawings;
+    aspect.drawings = newDrawings;
   }
 
   /**
@@ -287,22 +276,13 @@ export class Tracker {
   async deleteTextAspect(index) {
     const aspect = this.aspects[index];
     
-    // Delete all textbox on the viewed scene
-    canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
-      if (aspect.drawings.includes(drawing.data._id)) {
-        drawing.delete();
-      }
-    });
-
     // Delete all other textbox on all other scene
     game.scenes.forEach(scene => {
-      if (scene !== game.scenes.viewed) {
         const ds = scene.getEmbeddedCollection("Drawing").filter(drawing => {
-          return !aspect.drawings.includes(drawing._id);
+          return aspect.drawings.includes(drawing.data._id);
         });
 
-        scene.update({"drawings":ds});
-      }
+        scene.deleteEmbeddedDocuments('Drawing', ds.map(drawing => drawing.data._id));
     });
   }
 
@@ -326,27 +306,16 @@ export class Tracker {
    async toggleVisibilityTextAspect(index) {
     const aspect = this.aspects[index];
     
-    // Hide text aspect on the viewed scene
-    canvas.getLayer('DrawingsLayer').placeables.forEach( drawing => {
-      if (aspect.drawings.includes(drawing.data._id)) {
-        drawing.update({hidden:aspect.hidden});
-      }
-    });
-
-    // Hide all other textbox on all other scene
+    // Hide all textbox on all scene
     game.scenes.forEach(scene => {
-      if (scene !== game.scenes.viewed) {
         const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
-          if(aspect.drawings.includes(drawing._id))
-            return { _id: drawing._id, hidden: aspect.hidden }
+          if(aspect.drawings.includes(drawing.data._id))
+            return { _id: drawing.data._id, hidden: aspect.hidden }
           else
             return null
         }).filter(d => d != null);
 
-        scene.updateEmbeddedEntity('Drawing', drawings);
-      }
+        scene.updateEmbeddedDocuments('Drawing', drawings);
     });
-
-    await this.store();
   }
 }
