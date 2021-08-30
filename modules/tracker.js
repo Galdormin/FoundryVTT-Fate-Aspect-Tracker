@@ -204,7 +204,8 @@ export class Tracker {
       const defaultDrawing = game.settings.get("core", "defaultDrawingConfig");
       
       const text = aspect.description + "  ( " + aspect.invoke + " )";
-      const size = game.scenes.viewed.data.width*(1/100);
+      let size = game.scenes.viewed.data.width*(1/100);
+	  const fontsize = Math.min(256, Math.max(8, Math.round(size)));
       const height = size * 2;
       const width = (text.length * size / 1.5);
 
@@ -222,12 +223,12 @@ export class Tracker {
         strokeColor: defaultDrawing.strokeColor,
         strokeAlpha: defaultDrawing.strokeAlpha,
         text: text,
-        fontSize: size,
+        fontSize: fontsize,
         textColor: defaultDrawing.textColor,
         points: []
       };
 
-	  const d = await canvas.scene.createEmbeddedDocuments('Drawing', [drawing]);
+	  const d = await game.scenes.viewed.createEmbeddedDocuments('Drawing', [drawing]);
 
       d.forEach( drawing => aspect.drawings.push(drawing.data._id));
       await this.store();
