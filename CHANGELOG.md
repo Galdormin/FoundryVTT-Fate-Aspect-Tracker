@@ -1,5 +1,10 @@
 # Patch Notes:
 
+## Version 0.6.1
+
+* Hide arrows from input number
+* Fix some warnings caused by deprecated functions
+
 ## Version 0.6.0
 
 * Fix for 0.8.4
