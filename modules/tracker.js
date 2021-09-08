@@ -200,14 +200,20 @@ export class Tracker {
     const coordx = (posx - window.innerWidth/2) / s_pos.scale + s_pos.x;
     const coordy = (posy - window.innerHeight/2) / s_pos.scale + s_pos.y;
     
-    if (coordx > 0 && coordx < canvas.dimensions.width && coordy > 0 && coordy < canvas.dimensions.height) {
-      const defaultDrawing = game.settings.get("core", "defaultDrawingConfig");
-      
+    if (coordx > 0 && coordx < canvas.dimensions.width && coordy > 0 && coordy < canvas.dimensions.height) {      
       const text = aspect.description + "  ( " + aspect.invoke + " )";
-      let size = game.scenes.viewed.data.width*(1/100);
-	  const fontsize = Math.min(256, Math.max(8, Math.round(size)));
-      const height = size * 2;
-      const width = (text.length * size / 1.5);
+
+      const gridsize = game.scenes.viewed.data.grid
+      const size = gridsize*game.settings.get("fate-aspect-tracker","AspectDrawingFontSize")/100;
+            
+      const fontsize = Math.min(256, Math.max(8, Math.round(size/2)));
+      const height = size;
+      const width = (text.length * fontsize / 1.5);
+
+      let color = aspect.color;
+      if(!game.settings.get("fate-aspect-tracker","AspectDrawingFontDynamicColor")){
+        color = game.settings.get("fate-aspect-tracker","AspectDrawingFontColor");
+      }
 
       const drawing = {
         type: CONST.DRAWING_TYPES.RECTANGLE,
@@ -217,14 +223,15 @@ export class Tracker {
         width: width,
         height: height,
         fillType: CONST.DRAWING_FILL_TYPES.SOLID,
-        fillColor: defaultDrawing.fillColor,
-        fillAlpha: defaultDrawing.fillAlpha,
-        strokeWidth: defaultDrawing.strokeWidth,
-        strokeColor: defaultDrawing.strokeColor,
-        strokeAlpha: defaultDrawing.strokeAlpha,
+        fillColor: game.settings.get("fate-aspect-tracker","AspectDrawingFillColor"),
+        fillAlpha: game.settings.get("fate-aspect-tracker","AspectDrawingFillOpacity"),
+        strokeWidth: game.settings.get("fate-aspect-tracker","AspectDrawingBorderWidth"),
+        strokeColor: game.settings.get("fate-aspect-tracker","AspectDrawingBorderColor"),
+        strokeAlpha: game.settings.get("fate-aspect-tracker","AspectDrawingBorderOpacity"),
         text: text,
         fontSize: fontsize,
-        textColor: defaultDrawing.textColor,
+        fontFamily: CONFIG.fontFamilies[game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily")],
+        textColor: color,
         points: []
       };
 
@@ -253,10 +260,14 @@ export class Tracker {
     game.scenes.forEach(scene => {
         const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
           if(aspect.drawings.includes(drawing.data._id)) {
-            const size = game.scenes.viewed.data.width*(1/100);
-            const width = (updatedText.length * size / 1.5);
+            const gridsize = drawing.parent.data.grid
+            const size = gridsize*game.settings.get("fate-aspect-tracker","AspectDrawingFontSize")/100;
 
-            return { _id: drawing.data._id, text: updatedText, width: width }
+            const fontsize = Math.min(256, Math.max(8, Math.round(size/2)));
+            const height = size;
+            const width = (updatedText.length * fontsize / 1.5);
+
+            return { _id: drawing.data._id, text: updatedText, width: width, height: height, fontSize: fontsize}
           } else {
             return null
           }

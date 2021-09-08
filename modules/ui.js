@@ -145,18 +145,24 @@ export class AspectTrackerWindow extends Application {
    * 
    * 
    */
-   _getHeaderButtons() {
+  _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
 
     // Edit mode button to toggle which interactive elements are visible on the sheet.
     if (game.user?.isGM) {
       buttons.unshift(
-          {
-              class: "fat-show-player",
-              label: game.i18n.localize("FateAspectTracker.aspecttrackerwindow.showplayers"),
-              icon: "fas fa-eye",
-              onclick: (e) => Socket.showTrackerToPlayers(),
-          }
+        {
+          class: "fat-drawing-setting",
+          label: "",
+          icon: "fas fa-palette",
+          onclick: async (e) => new AspectDrawingSettings().render(true),
+        },
+        {
+          class: "fat-show-player",
+          label: game.i18n.localize("FateAspectTracker.aspecttrackerwindow.showplayers"),
+          icon: "fas fa-eye",
+          onclick: (e) => Socket.showTrackerToPlayers(),
+        }  
       );
     }
 
@@ -217,6 +223,88 @@ class AspectForm extends FormApplication {
     else await list.appendAspect(aspect);
 
     window.aspectTrackerWindow.render(true);
+  }
+}
+
+class AspectDrawingSettings extends FormApplication {
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      id: "fate-aspect-drawing-settings",
+      template: "modules/fate-aspect-tracker/templates/aspect-drawing-settings.hbs",
+      width: 450,
+      minimizable: false,
+      closeOnSubmit: true,
+      title: game.i18n.localize("FateAspectTracker.aspectdrawingsettings.title"),
+    });
+  }
+
+  /**
+   * Set up interactivity for the form.
+   *
+   * @param {JQuery} html is the rendered HTML provided by jQuery
+   **/
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    $('#reset_drawing_settings').on('click', async event => {
+      this.reset();
+    })
+  }
+
+  /** @override */
+  getData() {
+    return {
+      fontFamilies:CONFIG.fontFamilies, 
+      fontFamily:CONFIG.fontFamilies[game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily")],
+      fontSize:game.settings.get("fate-aspect-tracker","AspectDrawingFontSize"),
+      fontDynamicColor:game.settings.get("fate-aspect-tracker","AspectDrawingFontDynamicColor"),
+      fontColor:game.settings.get("fate-aspect-tracker","AspectDrawingFontColor"),
+      fillColor:game.settings.get("fate-aspect-tracker","AspectDrawingFillColor"),
+      fillOpacity:game.settings.get("fate-aspect-tracker","AspectDrawingFillOpacity"),
+      borderWidth:game.settings.get("fate-aspect-tracker","AspectDrawingBorderWidth"),
+      borderColor:game.settings.get("fate-aspect-tracker","AspectDrawingBorderColor"),
+      borderOpacity:game.settings.get("fate-aspect-tracker","AspectDrawingBorderOpacity")
+    };
+  }
+
+  /** @override */
+  async _updateObject(_event, data) {
+    let fontFamily = data.font_family;
+    let fontSize = data.font_size;
+    if (fontSize != 0) fontSize = Math.min(256, Math.max(8, fontSize));
+    let fontDynamicColor = data.font_dynamic_color;
+    let fontColor = data.font_color;
+    let fillColor = data.fill_color;
+    let fillOpacity = data.fill_opacity;
+    let borderWidth = data.border_width;
+    let borderColor = data.border_color;
+    let borderOpacity = data.border_opacity;
+
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontFamily", CONFIG.fontFamilies.indexOf(fontFamily));
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontSize", fontSize);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontDynamicColor", fontDynamicColor);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontColor", fontColor);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFillColor", fillColor);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFillOpacity", fillOpacity);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingBorderWidth", borderWidth);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingBorderColor", borderColor);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingBorderOpacity", borderOpacity);
+
+    this.close();
+  }
+
+  async reset() {
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontFamily", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontSize", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontDynamicColor", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontColor", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFillColor", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFillOpacity", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingBorderWidth", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingBorderColor", undefined);
+    await game.settings.set("fate-aspect-tracker","AspectDrawingBorderOpacity", undefined);
+
+    this.close();
   }
 }
 

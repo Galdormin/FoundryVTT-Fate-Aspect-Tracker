@@ -65,3 +65,28 @@ input.invoke::-webkit-inner-spin-button {
 #fate-aspect-tracker-form .field-scope{
   flex: 0.6;
 }
+
+#fate-aspect-drawing-settings .settings-list {
+  border: none;
+}
+
+#fate-aspect-drawing-settings .settings-title {
+  width: 55%;
+}
+
+#fate-aspect-drawing-settings .settings-value {
+  display: flex;
+}
+
+#fate-aspect-drawing-settings span.color-picker {
+  width: 20%;
+}
+
+#fate-aspect-drawing-settings .settings-description {
+  font-size:0.8em;
+  font-style: italic;
+}
+
+#fate-aspect-drawing-settings footer {
+  display: flex;
+}

@@ -14,10 +14,10 @@
     "FateAspectTracker.aspectform.customization": "Customización",
     "FateAspectTracker.aspectform.createaspect": "Crear Aspecto",
     "FateAspectTracker.aspectform.updateaspect": "Actualizar Aspecto",
+    
     "FateAspectTracker.aspecttrackerwindow.hideaspect": "Esconder Aspecto",
     "FateAspectTracker.aspecttrackerwindow.increaseinvoke": "Incrementar Invocaciones",
     "FateAspectTracker.aspecttrackerwindow.decreaseinvoke": "Reducir Invocaciones",
-  
     "FateAspectTracker.aspecttrackerwindow.title": "Tracker de Aspectos Fate",
     "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Borrar Aspecto",
     "FateAspectTracker.aspecttrackerwindow.editaspect": "Editar Aspecto",
@@ -28,5 +28,22 @@
     "FateAspectTracker.aspecttrackerwindow.tags.resources": "recursos",
     "FateAspectTracker.aspecttrackerwindow.showplayers": "Mostrar a Jugadores",
   
-    "FateAspectTracker.aspectText.error": "Has arrastrado el aspecto fuera del área de dibujo"
+    "FateAspectTracker.aspectText.error": "Has arrastrado el aspecto fuera del área de dibujo",
+
+    "FateAspectTracker.aspectdrawingsettings.title": "Aspect Drawing Settings",
+    "FateAspectTracker.aspectdrawingsettings.save": "Save",
+    "FateAspectTracker.aspectdrawingsettings.reset": "Reset",
+  
+    
+    "FateAspectTracker.settings.drawing.fontSize": "Font Size",
+    "FateAspectTracker.settings.drawing.fontSizeDescription": "Percentage of the grid size.",
+    "FateAspectTracker.settings.drawing.borderOpacity": "Border Opacity",
+    "FateAspectTracker.settings.drawing.fillOpacity": "Fill Opacity",
+    "FateAspectTracker.settings.drawing.borderWidth": "Border Width",
+    "FateAspectTracker.settings.drawing.fontFamily": "Font Family",
+    "FateAspectTracker.settings.drawing.fontDynamicColor": "Dynamic Font Color",
+    "FateAspectTracker.settings.drawing.fontDynamicColorDescription": "Font color is based on aspect color.",
+    "FateAspectTracker.settings.drawing.fontColor": "Font Color",
+    "FateAspectTracker.settings.drawing.fillColor": "Fill Color",
+    "FateAspectTracker.settings.drawing.borderColor": "Border Color"
   }

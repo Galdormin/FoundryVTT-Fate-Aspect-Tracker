@@ -1,0 +1,89 @@
+<form>
+    <table class="settings-list">
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.fontSize'}}<br/>
+                <div class="settings-description">{{localize 'FateAspectTracker.settings.drawing.fontSizeDescription'}}</div>
+            </td>
+            <td class="settings-value">
+                <input type="number" name="font_size" value="{{this.fontSize}}"></input>
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.fontFamily'}}
+            </td>
+            <td class="settings-value">
+                <select style="width: 99%" name="font_family">
+                    {{#each this.fontFamilies}}
+                    <option {{#if (eq this ../fontFamily)}}selected="selected"{{/if}}>
+                        {{this}}
+                    </option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.fontDynamicColor'}}
+                <div class="settings-description">{{localize 'FateAspectTracker.settings.drawing.fontDynamicColorDescription'}}</div>
+            </td>
+            <td class="settings-value">
+                <input type="checkbox" name="font_dynamic_color" value="{{this.fontDynamicColor}}" {{checked this.fontDynamicColor}}></input>
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.fontColor'}}
+            </td>
+            <td class="settings-value">
+                {{colorPicker name="font_color" value = this.fontColor}}
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.fillColor'}}
+            </td>
+            <td class="settings-value">
+                {{colorPicker name="fill_color" value = this.fillColor}}
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.fillOpacity'}}
+            </td>
+            <td class="settings-value">
+                {{rangePicker name="fill_opacity" value = this.fillOpacity max = "1" min = "0" step = "0.1"}}
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.borderWidth'}}
+            </td>
+            <td class="settings-value">
+                <input type="number" name="border_width" value="{{this.borderWidth}}"></input>
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.borderColor'}}
+            </td>
+            <td class="settings-value">
+                {{colorPicker name="border_color" value = this.borderColor}}
+            </td>
+        </tr>
+        <tr>
+            <td class="settings-title">
+                {{localize 'FateAspectTracker.settings.drawing.borderOpacity'}}
+            </td>
+            <td class="settings-value">
+                {{rangePicker name="border_opcaity" value = this.borderOpacity max = "1" min = "0" step = "0.1"}}
+            </td>
+        </tr>
+    </table>
+
+    <footer>
+        <button type="button" id="reset_drawing_settings"><i class="fas fa-undo"></i>{{localize 'FateAspectTracker.aspectdrawingsettings.reset'}}</button>
+        <button type="submit" name="submit" id="save_drawing_settings"><i class="fas fa-save"></i>{{localize 'FateAspectTracker.aspectdrawingsettings.save'}}</button>
+    </footer>
+</form>

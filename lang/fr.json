@@ -14,10 +14,10 @@
   "FateAspectTracker.aspectform.customization": "Personnalisation",
   "FateAspectTracker.aspectform.createaspect": "Créer l'aspect",
   "FateAspectTracker.aspectform.updateaspect": "Modifier l'aspect",
+
   "FateAspectTracker.aspecttrackerwindow.hideaspect": "Cacher l'aspect",
   "FateAspectTracker.aspecttrackerwindow.increaseinvoke": "Augmenter les invocations",
   "FateAspectTracker.aspecttrackerwindow.decreaseinvoke": "Diminuer les invocations",
-
   "FateAspectTracker.aspecttrackerwindow.title": "Gestionnaire d'Aspect Fate",
   "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Supprimer l'Aspect",
   "FateAspectTracker.aspecttrackerwindow.editaspect": "Éditer l'aspect",
@@ -28,5 +28,22 @@
   "FateAspectTracker.aspecttrackerwindow.tags.resources": "ressources",
   "FateAspectTracker.aspecttrackerwindow.showplayers": "Show Players",
 
-  "FateAspectTracker.aspectText.error": "Vous avez fait glisser l'aspect en dehors de la scène"
+  "FateAspectTracker.aspectText.error": "Vous avez fait glisser l'aspect en dehors de la scène",
+
+  "FateAspectTracker.aspectdrawingsettings.title": "Paramètres de Dessin des Aspects",
+  "FateAspectTracker.aspectdrawingsettings.save": "Enregistrer",
+  "FateAspectTracker.aspectdrawingsettings.reset": "Réinitialiser",
+
+  
+  "FateAspectTracker.settings.drawing.fontSize": "Taille de la police",
+  "FateAspectTracker.settings.drawing.fontSizeDescription": "Pourcentage de la taille de la grille.",
+  "FateAspectTracker.settings.drawing.borderOpacity": "Opacité des bordures",
+  "FateAspectTracker.settings.drawing.fillOpacity": "Opacité du remplissage",
+  "FateAspectTracker.settings.drawing.borderWidth": "Largeur des bordures",
+  "FateAspectTracker.settings.drawing.fontFamily": "Famille de police",
+  "FateAspectTracker.settings.drawing.fontDynamicColor": "Couleur de police dynamique",
+  "FateAspectTracker.settings.drawing.fontDynamicColorDescription": "La couleur de police est la couleur de l'aspect.",
+  "FateAspectTracker.settings.drawing.fontColor": "Couuleur de police",
+  "FateAspectTracker.settings.drawing.fillColor": "Couleur du remplissage",
+  "FateAspectTracker.settings.drawing.borderColor": "Couleur des bordures"
 }
