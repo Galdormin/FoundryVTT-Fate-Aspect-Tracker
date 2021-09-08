@@ -1,5 +1,15 @@
 # Patch Notes:
 
+## Version 1.0.0
+
+* Add custom drawing settings menu (use the palette icon on top of the window).
+* Aspect text box no longer use default drawing settings but custom drawings settings.
+* Aspect text box size no longer use canvas size but grid size.
+  * This allows to have large battlemaps without having huge text boxes compared to tokens.
+  * Text boxes are similar in size to tokens.
+* [issue #6] Aspect text box font color can now be based on aspect color.
+* **Warning** Missing *Spanish* and *Italian* translation for this update.
+
 ## Version 0.6.1
 
 * Hide arrows from input number
