@@ -1,5 +1,10 @@
 # Patch Notes:
 
+## Version 1.0.1
+
+* Fixed a bug of window resizing when aspects were modified.
+* Update of macros as a compendium.
+
 ## Version 1.0.0
 
 * Add custom drawing settings menu (use the palette icon on top of the window).
