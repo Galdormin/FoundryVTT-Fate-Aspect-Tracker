@@ -1,6 +1,6 @@
 export default class Socket {
     static refreshTracker() {
-        window.aspectTrackerWindow.render(false, window.aspectTrackerWindow.options);
+        window.aspectTrackerWindow.render(false);
         game.socket.emit("module.fate-aspect-tracker", {
             type: "aspectTrackerRefresh"
         })
@@ -15,7 +15,7 @@ export default class Socket {
     static listen() {
         game.socket.on("module.fate-aspect-tracker", data => {
             if (data.type === "aspectTrackerRefresh") {
-                window.aspectTrackerWindow.render(false, window.aspectTrackerWindow.options);
+                window.aspectTrackerWindow.render(false);
                 return;
             }
             if (data.type === "aspectTrackerShow") {
