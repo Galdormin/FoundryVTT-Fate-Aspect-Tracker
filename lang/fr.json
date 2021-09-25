@@ -45,5 +45,7 @@
   "FateAspectTracker.settings.drawing.fontDynamicColorDescription": "La couleur de police est la couleur de l'aspect.",
   "FateAspectTracker.settings.drawing.fontColor": "Couuleur de police",
   "FateAspectTracker.settings.drawing.fillColor": "Couleur du remplissage",
-  "FateAspectTracker.settings.drawing.borderColor": "Couleur des bordures"
+  "FateAspectTracker.settings.drawing.borderColor": "Couleur des bordures",
+
+  "FateAspectTracker.macro.weatherTag": "météo"
 }

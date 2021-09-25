@@ -20,6 +20,16 @@
     "styles": [
         "styles/fate-aspect-tracker.css"
     ],
+    "packs": [
+        {
+            "name": "macros",
+            "label": "Fate Aspect Tracker Macros",
+            "path": "packs/macros.db",
+            "entity": "Macro",
+            "package": "fate-aspect-tracker",
+            "private": false
+        }
+    ],
     "languages": [
         {
             "lang": "en",

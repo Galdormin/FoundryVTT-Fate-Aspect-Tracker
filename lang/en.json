@@ -45,5 +45,7 @@
   "FateAspectTracker.settings.drawing.fontDynamicColorDescription": "Font color is based on aspect color.",
   "FateAspectTracker.settings.drawing.fontColor": "Font Color",
   "FateAspectTracker.settings.drawing.fillColor": "Fill Color",
-  "FateAspectTracker.settings.drawing.borderColor": "Border Color"
+  "FateAspectTracker.settings.drawing.borderColor": "Border Color",
+
+  "FateAspectTracker.macro.weatherTag": "weather"
 }

@@ -1,11 +1,15 @@
 # Fate Aspect Tracker Macro
 
-To use the macros, simply copy the contents of the `.js` file into a new macro and select `script` in the macro type.
+The macros are directly added to the Fate Aspect Tracker Macros compendium. You just have to import them.
 
-![Create a new Macro](screenshot-macro.png)
+## Open Fate Aspect Tracker
 
-## Weather to Aspect
+This macro allows you in 1 click to open, maximize or bring to top the Fate Aspects Tracker window.
 
-This macro adds a new weather aspect to the tracker based on the weather provided by the [Calendar/Weather module](https://foundryvtt.com/packages/calendar-weather).
+## Weather-control to Aspect
 
-File : `weather-to-aspect.js`
+This macro adds a new weather aspect to the tracker based on the weather provided by the [Weather Control module](https://foundryvtt.com/packages/weather-control).
+
+## Macro Icons
+
+The macro icons are released by [game-icons.net](https://game-icons.net/) under the [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) license.
