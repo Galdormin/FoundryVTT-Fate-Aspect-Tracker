@@ -1,5 +1,11 @@
 # Patch Notes:
 
+## Vesrion 1.1.0
+
+* Aspects' description can now be edited directly in the aspect tracker
+  * Double left click on the aspect to open the inline editing
+  * Press Enter to save the aspect descritpion
+
 ## Version 1.0.1
 
 * Fixed a bug of window resizing when aspects were modified.
