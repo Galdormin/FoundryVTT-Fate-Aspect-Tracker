@@ -30,11 +30,17 @@
           </a>
           {{/if}}
 
-          <p class="aspect-description" {{#if color}}style="color: {{ color }}" {{/if}}>
-            <span class="description">
-              {{ description }}
-            </span>
-          </p>
+          {{#canEdit edit ../GM}}
+            <p class="edit-description" {{#if color}}style="color: {{ color }}" {{/if}} data-index="{{ @index }}">
+              <input type="text" id="description" class="aspect-description" name="description" value="{{ description }}" data-dtype="String" required="true">
+            </p>    
+          {{else}}
+            <p class="aspect-description" {{#if color}}style="color: {{ color }}" {{/if}} data-index="{{ @index }}">
+              <span class="description">
+                {{ description }}
+              </span>
+            </p>
+          {{/canEdit}}
 
           {{#if tag}}
             {{#tags tag}}

@@ -11,9 +11,10 @@ export class Aspect {
    * @param {number} invoke is the number of free invoke.
    * @param {Array<string>} drawings is the array of drawing id. 
    * @param {boolean} hidden is the aspect hidden from the player.
+   * @param {boolean} edit is the aspect can be inline edited by the GM.
    * @param {boolean} globalScope is the scope of the aspect.
    **/
-  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = [], hidden = false, globalScope = false) {
+  constructor(description = "", tag = "", color = "#000000", invoke = 0, drawings = [], hidden = false, edit = false, globalScope = false) {
     /** The aspect's description. **/
     this.description = description;
     /** The aspect's tag. */
@@ -26,6 +27,8 @@ export class Aspect {
     this.drawings = drawings;
     /** The aspect's hidden property **/
     this.hidden = hidden;
+    /** The aspect's inline edit property **/
+    this.edit = edit;
     /** The aspect's scope **/
     this.globalScope = globalScope;
   }
@@ -329,5 +332,17 @@ export class Tracker {
 
         scene.updateEmbeddedDocuments('Drawing', drawings);
     });
+  }
+
+  /**
+   * Toggle inline editing of the aspect given by its index
+  * @param {number} index is the index of the aspect
+   **/
+   async toggleEditing(index) {
+    const aspect = this.aspects[index];
+
+    aspect.edit = !aspect.edit;
+
+    await this.store();
   }
 }

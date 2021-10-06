@@ -26,6 +26,23 @@
   margin-left: 10px;
 }
 
+#fate-aspect-tracker-list .edit-description {
+  hyphens: auto;
+  flex: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#fate-aspect-tracker-list .edit-description input {
+  border: none;
+  border-bottom: 2px solid;
+  background-color: inherit;
+  margin: 0px;
+  margin-bottom: -2px;
+  padding: 0px;
+  font-size: 14px;
+}
+
 #fate-aspect-tracker-list span.tag {
   flex: 0;
   font-size: smaller;

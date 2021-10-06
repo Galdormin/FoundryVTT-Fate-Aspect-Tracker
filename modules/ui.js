@@ -28,6 +28,13 @@ async function preloadTemplates() {
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper('canEdit', function(edit, GM, options) {
+    if(edit && GM) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   return loadTemplates(templates);
 }
 
@@ -103,6 +110,33 @@ export class AspectTrackerWindow extends Application {
 
       window.aspectTrackerWindow.render(true);
     });
+
+    html.on("dblclick", "p.aspect-description", async function () {
+      const index = jQuery(this).data("index");
+
+      const list = window.aspectTrackerWindow.getData().tracker;
+
+      await list.toggleEditing(index);
+
+      window.aspectTrackerWindow.render(true);
+    });
+
+    html.on("keypress", "p.edit-description", async function(e){
+      if(e.which === 13){
+        const index = jQuery(this).data("index");
+        const desc = jQuery(this).children().get(0).value;
+
+        const list = window.aspectTrackerWindow.getData().tracker;
+
+        let aspect = list.aspects[index];
+        aspect.description = desc;
+
+        await list.updateAspect(index, aspect);
+        await list.toggleEditing(index);
+
+        window.aspectTrackerWindow.render(true);
+      }
+   });
 
     html.on("click", "button.aspect-new", async function () {
       new AspectForm(undefined, undefined).render(true);
