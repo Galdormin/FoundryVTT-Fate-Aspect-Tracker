@@ -1,5 +1,10 @@
 # Patch Notes:
 
+## Vesrion 1.2.0
+
+* V10 compatibility
+* Global Aspects are now stored in game settings, the _aspect_tracker journal entry is no longer needed
+
 ## Vesrion 1.1.0
 
 * Aspects' description can now be edited directly in the aspect tracker
