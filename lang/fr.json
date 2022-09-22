@@ -47,7 +47,7 @@
   "FateAspectTracker.settings.drawing.fillColor": "Couleur du remplissage",
   "FateAspectTracker.settings.drawing.borderColor": "Couleur des bordures",
 
-  "FateAspectTracker.settings.globalAspects": "Global Aspects",
+  "FateAspectTracker.settings.globalAspects": "Aspect globals",
   
   "FateAspectTracker.macro.weatherTag": "météo"
 }

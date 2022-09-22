@@ -68,21 +68,6 @@
         "templates/aspect-list.hbs"
     ],
     "relationships": {
-        "systems": [
-            {
-                "id": "fate-core-official",
-                "type": "system",
-                "compatibility": {
-                    "verified": "4.4.19"
-                }
-            },            {
-                "id": "fatex",
-                "type": "system",
-                "compatibility": {
-                    "verified": "1.0.1"
-                }
-            }
-        ],
         "requires": [
             {
                 "id": "_sortablejs",
@@ -100,6 +85,5 @@
             "type": "module"
         }
     ],
-    "socket": true,
-    "system": ["fate-core-official", "fatex"]
+    "socket": true
 }

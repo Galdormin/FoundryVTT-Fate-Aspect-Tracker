@@ -2,8 +2,8 @@
 
 ## Vesrion 1.2.0
 
-* V10 compatibility
-* Global Aspects are now stored in game settings, the _aspect_tracker journal entry is no longer needed
+* V10 compatibility by @MSAbaddon 
+* Global Aspects are now stored in game settings, the _aspect_tracker journal entry is no longer needed by @MSAbaddon 
 
 ## Vesrion 1.1.0
 
