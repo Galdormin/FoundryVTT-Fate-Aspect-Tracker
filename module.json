@@ -1,10 +1,10 @@
 {
     "manifestPlusVersion": "1.0.0",
-    "name": "fate-aspect-tracker",
+    "id": "fate-aspect-tracker",
     "title": "Fate Aspect Tracker",
     "description": "An Aspect Tracker for any Fate RPG.",
-    "version": "1.1.0",
-    "author": "Théo Plénet",
+    "version": "1.2.0",
+    "authors": [{ "name": "Théo Plénet" }],
     "url": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker",
     "bugs": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/issues",
     "allowBugReporter": true,
@@ -12,8 +12,11 @@
     "download": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/releases/latest/download/module.zip",
     "media": [],
     "library": false,
-    "minimumCoreVersion": "0.8.4",
-    "compatibleCoreVersion": "0.8.9",
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10",
+        "maximum": "10"
+    },
     "esmodules": [
         "modules/fate-aspect-tracker.js"
     ],
@@ -64,11 +67,39 @@
         "templates/aspect-item-form.hbs",
         "templates/aspect-list.hbs"
     ],
+    "relationships": {
+        "systems": [
+            {
+                "id": "fate-core-official",
+                "type": "system",
+                "compatibility": {
+                    "verified": "4.4.19"
+                }
+            },            {
+                "id": "fatex",
+                "type": "system",
+                "compatibility": {
+                    "verified": "1.0.1"
+                }
+            }
+        ],
+        "requires": [
+            {
+                "id": "_sortablejs",
+                "type": "module",
+                "compatibility": {
+                    "verified": "1.14.0-fvtt1"
+                }
+            }
+        ]
+    },
+    
     "dependencies": [
         {
             "name": "_sortablejs",
             "type": "module"
         }
     ],
-    "socket": true
+    "socket": true,
+    "system": ["fate-core-official", "fatex"]
 }

@@ -60,11 +60,10 @@ export class Tracker {
     }
 
     // Global Aspect
-    const journal = game.journal.getName("_aspect_tracker");
-    const journalAspects = journal.data.content;
+    const globalAspects = game.settings.get("fate-aspect-tracker","global-aspects");
 
-    if (journalAspects) {
-      aspects = aspects.concat(JSON.parse(journalAspects).map((aspect) =>
+    if (globalAspects) {
+      aspects = aspects.concat(JSON.parse(globalAspects).map((aspect) =>
         Object.assign(new Aspect(), aspect)
       ));
     }
@@ -77,16 +76,11 @@ export class Tracker {
 
   /** Store the current tracker in the database. **/
   async store() {
-    const journalAspects = this.aspects.filter(aspect => aspect.globalScope);
+    const globalAspects = `${JSON.stringify(this.aspects.filter(aspect => aspect.globalScope))}`;
     const sceneAspects = this.aspects.filter(aspect => !aspect.globalScope);
-    
-    // Global Aspects
-    let update = {
-      "content": JSON.stringify(journalAspects)
-    };
 
-    let journal = game.journal.getName("_aspect_tracker");
-    await journal.update(update, {diff: false});
+    // Global Aspects
+    await game.settings.set("fate-aspect-tracker", "global-aspects", globalAspects);
 
     // Not Global Aspects
     await game.scenes.viewed.setFlag("fate-aspect-tracker", "aspects", JSON.stringify(sceneAspects));
@@ -206,7 +200,7 @@ export class Tracker {
     if (coordx > 0 && coordx < canvas.dimensions.width && coordy > 0 && coordy < canvas.dimensions.height) {      
       const text = aspect.description + "  ( " + aspect.invoke + " )";
 
-      const gridsize = game.scenes.viewed.data.grid
+      const gridsize = game.scenes.viewed.data.grid.size
       const size = gridsize*game.settings.get("fate-aspect-tracker","AspectDrawingFontSize")/100;
             
       const fontsize = Math.min(256, Math.max(8, Math.round(size/2)));
@@ -263,7 +257,7 @@ export class Tracker {
     game.scenes.forEach(scene => {
         const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
           if(aspect.drawings.includes(drawing.data._id)) {
-            const gridsize = drawing.parent.data.grid
+            const gridsize = drawing.parent.data.grid.size
             const size = gridsize*game.settings.get("fate-aspect-tracker","AspectDrawingFontSize")/100;
 
             const fontsize = Math.min(256, Math.max(8, Math.round(size/2)));
