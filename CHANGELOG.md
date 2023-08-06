@@ -1,5 +1,9 @@
 # Patch Notes:
 
+## Version 1.2.1
+
+* V11 compatibility (removed packs from module.json)
+
 ## Vesrion 1.2.0
 
 * V10 compatibility by @MSAbaddon 
