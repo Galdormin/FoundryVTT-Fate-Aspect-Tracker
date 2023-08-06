@@ -23,6 +23,7 @@
     "styles": [
         "styles/fate-aspect-tracker.css"
     ],
+    "packs":[],
     "languages": [
         {
             "lang": "en",
