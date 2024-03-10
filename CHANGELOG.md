@@ -1,5 +1,9 @@
 # Patch Notes:
 
+## Version 1.3.0
+
+* Remove `_sortable.js` from module dependcy to local dependency #22
+
 ## Version 1.2.1
 
 * V11 compatibility (removed packs from module.json)
