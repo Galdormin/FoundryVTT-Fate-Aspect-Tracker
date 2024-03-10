@@ -1,80 +1,54 @@
 {
-    "manifestPlusVersion": "1.0.0",
-    "id": "fate-aspect-tracker",
-    "title": "Fate Aspect Tracker",
-    "description": "An Aspect Tracker for any Fate RPG.",
-    "version": "1.2.1",
-    "authors": [{ "name": "Théo Plénet" }],
-    "url": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker",
-    "bugs": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/issues",
-    "allowBugReporter": true,
-    "manifest": "https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/master/module.json",
-    "download": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/releases/latest/download/module.zip",
-    "media": [],
-    "library": false,
-    "compatibility": {
-        "minimum": "10",
-        "verified": "11",
-        "maximum": "11"
+  "id": "fate-aspect-tracker",
+  "title": "Fate Aspect Tracker",
+  "description": "An Aspect Tracker for any Fate RPG.",
+  "version": "1.3.0",
+  "authors": [
+    {
+      "name": "Théo Plénet",
+      "flags": {}
+    }
+  ],
+  "url": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker",
+  "bugs": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/issues",
+  "manifest": "https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/master/module.json",
+  "download": "https://github.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/releases/latest/download/module.zip",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "11"
+  },
+  "esmodules": [
+    "modules/fate-aspect-tracker.js",
+    "modules/Sortable.js"
+  ],
+  "styles": [
+    "styles/fate-aspect-tracker.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
     },
-    "esmodules": [
-        "modules/fate-aspect-tracker.js"
-    ],
-    "styles": [
-        "styles/fate-aspect-tracker.css"
-    ],
-    "packs":[],
-    "languages": [
-        {
-            "lang": "en",
-            "name": "English",
-            "path": "lang/en.json"
-        },
-        {
-            "lang": "it",
-            "name": "Italiano",
-            "path": "lang/it.json"
-        },
-        {
-            "lang": "fr",
-            "name": "Français",
-            "path": "lang/fr.json"
-        },
-        {
-            "lang": "es",
-            "name": "Español",
-            "path": "lang/es.json"
-        }
-    ],
-    "includes": [
-        "modules/fate-aspect-tracker.js",
-        "modules/colors.js",
-        "modules/logger.js",
-        "modules/tracker.js",
-        "modules/ui.js",
-        "modules/socket.js",
-        "lang/en.json",
-        "styles/fate-aspect-tracker.css",
-        "templates/aspect-item-form.hbs",
-        "templates/aspect-list.hbs"
-    ],
-    "relationships": {
-        "requires": [
-            {
-                "id": "_sortablejs",
-                "type": "module",
-                "compatibility": {
-                    "verified": "1.14.0-fvtt1"
-                }
-            }
-        ]
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "lang/it.json",
+      "flags": {}
     },
-    
-    "dependencies": [
-        {
-            "name": "_sortablejs",
-            "type": "module"
-        }
-    ],
-    "socket": true
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json",
+      "flags": {}
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json",
+      "flags": {}
+    }
+  ],
+  "socket": true
 }
