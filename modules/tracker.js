@@ -200,7 +200,7 @@ export class Tracker {
     if (coordx > 0 && coordx < canvas.dimensions.width && coordy > 0 && coordy < canvas.dimensions.height) {      
       const text = aspect.description + "  ( " + aspect.invoke + " )";
 
-      const gridsize = game.scenes.viewed.data.grid.size
+      const gridsize = game.scenes.viewed.grid.size;
       const size = gridsize*game.settings.get("fate-aspect-tracker","AspectDrawingFontSize")/100;
             
       const fontsize = Math.min(256, Math.max(8, Math.round(size/2)));
@@ -213,12 +213,14 @@ export class Tracker {
       }
 
       const drawing = {
-        type: CONST.DRAWING_TYPES.RECTANGLE,
+        type: foundry.data.ShapeData.TYPES.RECTANGLE,
         author: game.user.id,
         x: coordx - width/2,
         y: coordy - height/2,
-        width: width,
-        height: height,
+        shape:{
+            width: width,
+            height: height,
+        },
         fillType: CONST.DRAWING_FILL_TYPES.SOLID,
         fillColor: game.settings.get("fate-aspect-tracker","AspectDrawingFillColor"),
         fillAlpha: game.settings.get("fate-aspect-tracker","AspectDrawingFillOpacity"),
@@ -227,14 +229,14 @@ export class Tracker {
         strokeAlpha: game.settings.get("fate-aspect-tracker","AspectDrawingBorderOpacity"),
         text: text,
         fontSize: fontsize,
-        fontFamily: CONFIG.fontFamilies[game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily")],
+        fontFamily: CONFIG.fontDefinitions[game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily")],
         textColor: color,
         points: []
       };
 
 	  const d = await game.scenes.viewed.createEmbeddedDocuments('Drawing', [drawing]);
 
-      d.forEach( drawing => aspect.drawings.push(drawing.data._id));
+      d.forEach( drawing => aspect.drawings.push(drawing.id));
       await this.store();
     } else {
       ui.notifications.warn(game.i18n.localize("FateAspectTracker.aspectText.error"));
@@ -256,15 +258,15 @@ export class Tracker {
     // Update all textbox on all scene
     game.scenes.forEach(scene => {
         const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
-          if(aspect.drawings.includes(drawing.data._id)) {
-            const gridsize = drawing.parent.data.grid.size
+          if(aspect.drawings.includes(drawing.id)) {
+            const gridsize = drawing.parent.grid.size
             const size = gridsize*game.settings.get("fate-aspect-tracker","AspectDrawingFontSize")/100;
 
             const fontsize = Math.min(256, Math.max(8, Math.round(size/2)));
             const height = size;
             const width = (updatedText.length * fontsize / 1.5);
 
-            return { _id: drawing.data._id, text: updatedText, width: width, height: height, fontSize: fontsize}
+            return { _id: drawing.id, text: updatedText, width: width, height: height, fontSize: fontsize}
           } else {
             return null
           }
@@ -288,10 +290,10 @@ export class Tracker {
     // Delete all other textbox on all other scene
     game.scenes.forEach(scene => {
         const ds = scene.getEmbeddedCollection("Drawing").filter(drawing => {
-          return aspect.drawings.includes(drawing.data._id);
+          return aspect.drawings.includes(drawing.id);
         });
 
-        scene.deleteEmbeddedDocuments('Drawing', ds.map(drawing => drawing.data._id));
+        scene.deleteEmbeddedDocuments('Drawing', ds.map(drawing => drawing.id));
     });
   }
 
@@ -318,8 +320,8 @@ export class Tracker {
     // Hide all textbox on all scene
     game.scenes.forEach(scene => {
         const drawings = scene.getEmbeddedCollection("Drawing").map(drawing => {
-          if(aspect.drawings.includes(drawing.data._id))
-            return { _id: drawing.data._id, hidden: aspect.hidden }
+          if(aspect.drawings.includes(drawing.id))
+            return { _id: drawing.id, hidden: aspect.hidden }
           else
             return null
         }).filter(d => d != null);
