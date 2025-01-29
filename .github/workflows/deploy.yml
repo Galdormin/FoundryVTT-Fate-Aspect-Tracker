@@ -1,0 +1,29 @@
+name: Deploy to FoundryVTT
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create archive
+        run: |
+          git archive --format=zip HEAD -o module.zip
+
+      - name: Upload archive to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: module.zip
+
+      - name: Deploy to FoundryVTT
+        uses: illandril/FoundryVTT-package-release-action@v1
+        with:
+          package-release-token: ${{ secrets.PACKAGE_RELEASE_TOKEN }}
+          manifest-url: 'https://raw.githubusercontent.com/Galdormin/FoundryVTT-Fate-Aspect-Tracker/master/module.json'
