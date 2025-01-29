@@ -21,12 +21,14 @@
     "FateAspectTracker.aspecttrackerwindow.title": "Tracker de Aspectos Fate",
     "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Borrar Aspecto",
     "FateAspectTracker.aspecttrackerwindow.editaspect": "Editar Aspecto",
+    "FateAspectTracker.aspecttrackerwindow.copyaspect": "Copiar Aspecto",
     "FateAspectTracker.aspecttrackerwindow.newaspect": "Crear Aspecto",
     "FateAspectTracker.aspecttrackerwindow.placeholder": "No hay ningún Aspecto",
     "FateAspectTracker.aspecttrackerwindow.tags.situation": "situación",
     "FateAspectTracker.aspecttrackerwindow.tags.boost": "boost",
     "FateAspectTracker.aspecttrackerwindow.tags.resources": "recursos",
     "FateAspectTracker.aspecttrackerwindow.showplayers": "Mostrar a Jugadores",
+    "FateAspectTracker.aspecttrackerwindow.global": "Global",
   
     "FateAspectTracker.aspectText.error": "Has arrastrado el aspecto fuera del área de dibujo",
 

@@ -13,6 +13,8 @@ async function preloadTemplates() {
   const templates = [
     "modules/fate-aspect-tracker/templates/aspect-list.hbs",
     "modules/fate-aspect-tracker/templates/aspect-item-form.hbs",
+    "modules/fate-aspect-tracker/templates/aspect-drawing-settings.hbs",
+    "modules/fate-aspect-tracker/templates/partial/aspect-item.hbs",
   ];
 
   Handlebars.registerHelper("tags", function(tag, options) {
@@ -100,6 +102,9 @@ export class AspectTrackerWindow extends Application {
           break;
         case "aspect-edit":
           new AspectForm(list.aspects[index], index).render(true);
+          break;
+        case "aspect-copy":
+          new AspectForm(list.aspects[index], undefined).render(true);
           break;
         case "aspect-toggle":
           await list.toggleVisibility(index);
