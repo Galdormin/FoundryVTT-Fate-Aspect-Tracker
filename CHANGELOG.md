@@ -3,6 +3,7 @@
 ## Version 1.5.0
 
 * Add the copy options on aspects #19
+* Add `global` tag in the tracker window for global aspects
 
 ## Version 1.4.1
 

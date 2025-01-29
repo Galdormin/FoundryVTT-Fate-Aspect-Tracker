@@ -1,0 +1,70 @@
+{{#hideAspect aspect.hidden GM}}
+<li>
+  <div class="flexrow" {{#if aspect.hidden}} style="background-color: lightgray;" {{/if}}>
+    
+    {{#if GM}}
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.hideaspect' }}" class="aspect-control" data-index="{{ index }}" data-action="aspect-toggle">
+      {{#if aspect.hidden}}
+        <i class="fas fa-eye-slash"></i>
+      {{else}}
+        <i class="fas fa-eye"></i>
+      {{/if}}
+    </a>
+
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.increaseinvoke' }}" class="aspect-control" data-index="{{ index }}" data-action="aspect-increase-invoke">
+      <i class="fas fa-plus"></i>
+    </a>
+    {{/if}}
+
+    <span class="invoke">
+      {{ aspect.invoke }}
+    </span>
+
+    {{#if GM}}
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.decreaseinvoke' }}" class="aspect-control" data-index="{{ index }}" data-action="aspect-decrease-invoke">
+      <i class="fas fa-minus"></i>
+    </a>
+    {{/if}}
+
+    {{#canEdit aspect.edit GM}}
+    <p class="edit-description" {{#if aspect.color}}style="color: {{ aspect.color }}" {{/if}} data-index="{{ index }}">
+      <input type="text" id="description" class="aspect-description" name="description" value="{{ aspect.description }}" data-dtype="String" required="true">
+    </p>    
+    {{else}}
+    <p class="aspect-description" {{#if aspect.color}}style="color: {{ aspect.color }}" {{/if}} data-index="{{ index }}">
+      <span class="description">
+        {{ aspect.description }}
+      </span>
+    </p>
+    {{/canEdit}}
+
+    {{#if aspect.tag}}
+    {{#tags aspect.tag}}
+      <span class="tag">
+        {{ this }}
+      </span>
+    {{/tags}}
+    {{/if}}
+    {{#if aspect.globalScope}}
+      <span class="tag">
+        {{ localize 'FateAspectTracker.aspecttrackerwindow.global' }}
+      </span>
+    {{/if}}
+
+    {{#if GM}}
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.editaspect' }}" class="aspect-control" data-index="{{ index }}"
+      data-action="aspect-edit">
+      <i class="fas fa-edit"></i>
+    </a>
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.copyaspect' }}" class="aspect-control" data-index="{{ index }}"
+      data-action="aspect-copy">
+      <i class="fas fa-copy"></i>
+    </a>
+    <a title="{{ localize 'FateAspectTracker.aspecttrackerwindow.deleteaspect' }}" class="aspect-control" data-index="{{ index }}"
+      data-action="aspect-delete">
+      <i class="fas fa-trash-alt"></i>
+    </a>
+    {{/if}}
+  </div>
+</li>
+{{/hideAspect}}
