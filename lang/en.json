@@ -20,6 +20,7 @@
   "FateAspectTracker.aspecttrackerwindow.decreaseinvoke": "Decrease Invoke",
   "FateAspectTracker.aspecttrackerwindow.title": "Fate Aspect Tracker",
   "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Delete Aspect",
+  "FateAspectTracker.aspecttrackerwindow.copyaspect": "Copy Aspect",
   "FateAspectTracker.aspecttrackerwindow.editaspect": "Edit Aspect",
   "FateAspectTracker.aspecttrackerwindow.newaspect": "New Aspect",
   "FateAspectTracker.aspecttrackerwindow.placeholder": "There's no aspect at the moment.",

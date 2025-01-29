@@ -101,6 +101,9 @@ export class AspectTrackerWindow extends Application {
         case "aspect-edit":
           new AspectForm(list.aspects[index], index).render(true);
           break;
+        case "aspect-copy":
+          new AspectForm(list.aspects[index], undefined).render(true);
+          break;
         case "aspect-toggle":
           await list.toggleVisibility(index);
           break;

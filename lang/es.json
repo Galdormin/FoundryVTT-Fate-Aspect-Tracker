@@ -21,6 +21,7 @@
     "FateAspectTracker.aspecttrackerwindow.title": "Tracker de Aspectos Fate",
     "FateAspectTracker.aspecttrackerwindow.deleteaspect": "Borrar Aspecto",
     "FateAspectTracker.aspecttrackerwindow.editaspect": "Editar Aspecto",
+    "FateAspectTracker.aspecttrackerwindow.copyaspect": "Copiar Aspecto",
     "FateAspectTracker.aspecttrackerwindow.newaspect": "Crear Aspecto",
     "FateAspectTracker.aspecttrackerwindow.placeholder": "No hay ningún Aspecto",
     "FateAspectTracker.aspecttrackerwindow.tags.situation": "situación",
