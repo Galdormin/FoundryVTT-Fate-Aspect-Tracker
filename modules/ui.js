@@ -1,5 +1,5 @@
 /* global jQuery, Handlebars, Sortable */
-/* global game, loadTemplates, mergeObject, Application, FormApplication, Dialog */
+/* global game, loadTemplates, Application, FormApplication, Dialog */
 
 import { Aspect, Tracker } from "./tracker.js";
 import { RGBColor } from "./colors.js";
@@ -40,7 +40,7 @@ async function preloadTemplates() {
 
 export class AspectTrackerWindow extends Application {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: "fate-aspect-tracker-app",
       template: "modules/fate-aspect-tracker/templates/aspect-list.hbs",
       width: 400,
@@ -206,7 +206,7 @@ export class AspectTrackerWindow extends Application {
 
 class AspectForm extends FormApplication {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: "fate-aspect-tracker-form",
       template: "modules/fate-aspect-tracker/templates/aspect-item-form.hbs",
       width: 400,
@@ -262,7 +262,7 @@ class AspectForm extends FormApplication {
 
 class AspectDrawingSettings extends FormApplication {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: "fate-aspect-drawing-settings",
       template: "modules/fate-aspect-tracker/templates/aspect-drawing-settings.hbs",
       width: 450,
@@ -288,8 +288,8 @@ class AspectDrawingSettings extends FormApplication {
   /** @override */
   getData() {
     return {
-      fontFamilies:CONFIG.fontFamilies, 
-      fontFamily:CONFIG.fontFamilies[game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily")],
+      fontFamilies:Object.keys(CONFIG.fontDefinitions), 
+      fontFamily:game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily"),
       fontSize:game.settings.get("fate-aspect-tracker","AspectDrawingFontSize"),
       fontDynamicColor:game.settings.get("fate-aspect-tracker","AspectDrawingFontDynamicColor"),
       fontColor:game.settings.get("fate-aspect-tracker","AspectDrawingFontColor"),
@@ -314,7 +314,7 @@ class AspectDrawingSettings extends FormApplication {
     let borderColor = data.border_color;
     let borderOpacity = data.border_opacity;
 
-    await game.settings.set("fate-aspect-tracker","AspectDrawingFontFamily", CONFIG.fontFamilies.indexOf(fontFamily));
+    await game.settings.set("fate-aspect-tracker","AspectDrawingFontFamily", fontFamily);
     await game.settings.set("fate-aspect-tracker","AspectDrawingFontSize", fontSize);
     await game.settings.set("fate-aspect-tracker","AspectDrawingFontDynamicColor", fontDynamicColor);
     await game.settings.set("fate-aspect-tracker","AspectDrawingFontColor", fontColor);

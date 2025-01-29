@@ -87,7 +87,7 @@ Hooks.once('init', async() => {
     config: false,
     type:String,
     restricted:true,
-    choices:CONFIG.fontFamilies,
+    choices:Object.keys(CONFIG.fontDefinitions),
     default:"Arial",
   });
 

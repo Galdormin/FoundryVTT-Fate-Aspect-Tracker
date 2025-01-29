@@ -229,7 +229,7 @@ export class Tracker {
         strokeAlpha: game.settings.get("fate-aspect-tracker","AspectDrawingBorderOpacity"),
         text: text,
         fontSize: fontsize,
-        fontFamily: CONFIG.fontDefinitions[game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily")],
+        fontFamily: game.settings.get("fate-aspect-tracker","AspectDrawingFontFamily"),
         textColor: color,
         points: []
       };
@@ -273,7 +273,7 @@ export class Tracker {
         }).filter(d => d != null);
 
         scene.updateEmbeddedDocuments('Drawing', drawings);
-		newDrawings = newDrawings.concat(drawings.map(drawing => drawing._id));
+        newDrawings = newDrawings.concat(drawings.map(drawing => drawing._id));
     });
 
     // Replace drawings with existing textbox (i.e. Remove from list deleted textbox)

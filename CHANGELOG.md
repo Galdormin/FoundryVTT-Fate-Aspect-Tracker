@@ -1,5 +1,14 @@
 # Patch Notes:
 
+## Version 1.4.1
+
+* Fix aspect settings related to font #25
+* Fix `mergeObject` deprecated
+
+## Version 1.4.0
+
+* Update for V12
+
 ## Version 1.3.0
 
 * Remove `_sortable.js` from module dependcy to local dependency #22
